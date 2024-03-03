@@ -8,7 +8,7 @@
 
 namespace
 {
-const int framerateLimit = 60;
+const int framerateLimit = 10;
 const int textureWidth = 80;
 const int textureHeight = 60;
 const int windowWidth = 800;
@@ -17,7 +17,7 @@ const int windowHeight = 600;
 
 Application::Application()
     : m_window("Lenia Toybox", windowWidth, windowHeight)
-    , m_computeShader("shaders/display_texture.vert", "shaders/compute.frag")
+    , m_computeShader("shaders/display_texture.vert", "shaders/conway_life.frag")
     , m_displayShader("shaders/display_texture.vert", "shaders/display_texture.frag")
     , m_textures{
         Texture(textureWidth, textureHeight),

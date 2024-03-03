@@ -4,19 +4,19 @@
 #include <emscripten.h>
 #endif
 
-#include "Window.hpp"
-
 Application::Application()
     : m_window("Lenia Toybox", 800, 600)
+    , m_shader("shaders/display_texture.vert", "shaders/display_texture.frag")
+    , m_texture(800, 600)
 {
+    m_texture.FillWithRandom();
 }
 
 int Application::Run()
 {
     auto mainLoop = [](void* data) {
         Application* application = reinterpret_cast<Application*>(data);
-        application->m_window.Clear();
-        application->m_window.Refresh();
+        application->Update();
         application->m_running = !application->m_window.GotQuitEvent();
     };
 
@@ -32,4 +32,13 @@ int Application::Run()
 #endif
 
     return 0;
+}
+
+void Application::Update()
+{
+    m_window.Clear();
+    m_texture.Bind();
+    m_shader.Use();
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    m_window.Refresh();
 }

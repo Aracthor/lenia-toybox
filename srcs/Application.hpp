@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Clock.hpp"
 #include "ShaderProgram.hpp"
 #include "Texture.hpp"
 #include "Window.hpp"
@@ -14,6 +15,7 @@ public:
 private:
     void Update();
 
+    Clock m_clock;
     Window m_window;
     ShaderProgram m_shader;
     Texture m_texture;

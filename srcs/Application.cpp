@@ -13,10 +13,16 @@ const int framerateLimit = 60;
 
 Application::Application()
     : m_window("Lenia Toybox", 800, 600)
-    , m_shader("shaders/display_texture.vert", "shaders/display_texture.frag")
-    , m_texture(800, 600)
+    , m_computeShader("shaders/display_texture.vert", "shaders/compute.frag")
+    , m_displayShader("shaders/display_texture.vert", "shaders/display_texture.frag")
+    , m_textures{
+        Texture(800, 600),
+        Texture(800, 600),
+    }
+    , m_inputTexture(&m_textures[0])
+    , m_outputTexture(&m_textures[1])
 {
-    m_texture.FillWithRandom();
+    m_textures[0].FillWithRandom();
 }
 
 int Application::Run()
@@ -51,8 +57,18 @@ int Application::Run()
 void Application::Update()
 {
     m_window.Clear();
-    m_texture.Bind();
-    m_shader.Use();
+
+    m_outputTexture->AttachToFrameBuffer(m_frameBuffer);
+    m_inputTexture->Bind();
+    m_computeShader.Use();
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    m_frameBuffer.Unbind();
+
+    m_displayShader.Use();
+    m_outputTexture->Bind();
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
     m_window.Refresh();
+
+    std::swap(m_inputTexture, m_outputTexture);
 }

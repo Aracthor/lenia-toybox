@@ -1,6 +1,8 @@
 #pragma once
 
-#include <GL/gl.h>
+#include <GL/glew.h>
+
+class FrameBuffer;
 
 class Texture
 {
@@ -10,6 +12,8 @@ public:
 
     void Bind() const;
     void Unbind() const;
+
+    void AttachToFrameBuffer(const FrameBuffer& frameBuffer) const;
 
     void FillWithRandom();
 

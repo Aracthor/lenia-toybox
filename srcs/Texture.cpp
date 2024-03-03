@@ -1,5 +1,7 @@
 #include "Texture.hpp"
 
+#include "FrameBuffer.hpp"
+
 #include <cstdlib> // random
 #include <vector>
 
@@ -33,6 +35,17 @@ void Texture::Bind() const
 void Texture::Unbind() const
 {
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Texture::AttachToFrameBuffer(const FrameBuffer& frameBuffer) const
+{
+    frameBuffer.Bind();
+    Bind();
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_textureID, 0);
+    GLenum buffer = GL_COLOR_ATTACHMENT0;
+    glDrawBuffers(1, &buffer);
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        std::abort();
 }
 
 void Texture::FillWithRandom()

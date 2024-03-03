@@ -97,3 +97,11 @@ void ShaderProgram::Use() const
 {
     glUseProgram(m_programID);
 }
+
+void ShaderProgram::SetUniformVec2(const char* name, float x, float y) const
+{
+    GLint uniformLocation;
+    uniformLocation = glGetUniformLocation(m_programID, name);
+    const float data[2] = {x, y};
+    glUniform2fv(uniformLocation, 1, data);
+}

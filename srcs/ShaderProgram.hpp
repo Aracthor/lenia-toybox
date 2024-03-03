@@ -10,6 +10,8 @@ public:
 
     void Use() const;
 
+    void SetUniformVec2(const char* name, float x, float y) const;
+
 private:
     GLuint m_vertexShaderID;
     GLuint m_fragmentShaderID;

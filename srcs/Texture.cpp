@@ -12,7 +12,7 @@ Texture::Texture(int width, int height)
     glGenTextures(1, &m_textureID);
     Bind();
     {
-        const GLenum format = GL_RGB;
+        const GLenum format = GL_RED;
         glTexImage2D(GL_TEXTURE_2D, 0, format, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, nullptr);
     }
 
@@ -52,14 +52,14 @@ void Texture::FillWithRandom()
 {
     std::vector<GLubyte> bytes;
     {
-        int byte_count = m_width * m_height * 3;
+        int byte_count = m_width * m_height;
         bytes.reserve(byte_count);
         while (byte_count-- > 0)
             bytes.push_back(random() % 0x100);
     }
 
     Bind();
-    const GLenum format = GL_RGB;
+    const GLenum format = GL_RED;
     glTexImage2D(GL_TEXTURE_2D, 0, format, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, bytes.data());
     Unbind();
 }

@@ -12,5 +12,6 @@ out vec4 frag_color;
 void main()
 {
     vec2 uv = gl_FragCoord.xy / resolution;
-    frag_color = texture(display_texture, uv);
+    float color = texture(display_texture, uv).r;
+    frag_color = vec4(color, color, color, 1.0);
 }

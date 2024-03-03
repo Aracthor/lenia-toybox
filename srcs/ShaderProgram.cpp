@@ -98,10 +98,20 @@ void ShaderProgram::Use() const
     glUseProgram(m_programID);
 }
 
+void ShaderProgram::SetUniformInt(const char* name, int n) const
+{
+    const GLint uniformLocation = glGetUniformLocation(m_programID, name);
+    glUniform1i(uniformLocation, n);
+}
+
+void ShaderProgram::SetUniformInt2(const char* name, int x, int y) const
+{
+    const GLint uniformLocation = glGetUniformLocation(m_programID, name);
+    glUniform2i(uniformLocation, x, y);
+}
+
 void ShaderProgram::SetUniformVec2(const char* name, float x, float y) const
 {
-    GLint uniformLocation;
-    uniformLocation = glGetUniformLocation(m_programID, name);
-    const float data[2] = {x, y};
-    glUniform2fv(uniformLocation, 1, data);
+    const GLint uniformLocation = glGetUniformLocation(m_programID, name);
+    glUniform2f(uniformLocation, x, y);
 }

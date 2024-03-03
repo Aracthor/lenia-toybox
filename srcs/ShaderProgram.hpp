@@ -10,6 +10,8 @@ public:
 
     void Use() const;
 
+    void SetUniformInt(const char* name, int n) const;
+    void SetUniformInt2(const char* name, int x, int y) const;
     void SetUniformVec2(const char* name, float x, float y) const;
 
 private:

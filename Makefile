@@ -45,7 +45,9 @@ LD_WEBASM_FLAGS= -O3                     \
                  -s FULL_ES3=1           \
 
 
-SRCS_FILES= main.cpp
+SRCS_FILES=     main.cpp          \
+                Application.cpp   \
+                Window.cpp        \
 
 
 SRCS=       $(addprefix $(SRCS_DIR),$(SRCS_FILES))

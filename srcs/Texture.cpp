@@ -40,7 +40,7 @@ void Texture::AttachToFrameBuffer(const FrameBuffer& frameBuffer) const
 {
     frameBuffer.Bind();
     Bind();
-    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_textureID, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textureID, 0);
     GLenum buffer = GL_COLOR_ATTACHMENT0;
     glDrawBuffers(1, &buffer);
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)

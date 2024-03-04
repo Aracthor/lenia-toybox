@@ -9,8 +9,8 @@
 namespace
 {
 const int framerateLimit = 60;
-const int textureWidth = 160;
-const int textureHeight = 120;
+const int textureWidth = 800;
+const int textureHeight = 600;
 const int windowWidth = 800;
 const int windowHeight = 600;
 
@@ -36,16 +36,19 @@ const int windowHeight = 600;
 // const float birthRangeMax = 0.25;
 
 // Proto-Lenia Primordia
-const int range = 5;
-const float survivalRangeMin = 0.12;
-const float survivalRangeMax = 0.15;
-const float birthRangeMin = 0.12;
-const float birthRangeMax = 0.15;
+// const int range = 5;
+// const float survivalRangeMin = 0.12;
+// const float survivalRangeMax = 0.15;
+// const float birthRangeMin = 0.12;
+// const float birthRangeMax = 0.15;
+
+// Lenia
+const int range = 15;
 } // namespace
 
 Application::Application()
     : m_window("Lenia Toybox", windowWidth, windowHeight)
-    , m_computeShader("shaders/display_texture.vert", "shaders/primordia.frag")
+    , m_computeShader("shaders/display_texture.vert", "shaders/lenia.frag")
     , m_displayShader("shaders/display_texture.vert", "shaders/display_texture.frag")
     , m_textures{
         Texture(textureWidth, textureHeight),
@@ -95,8 +98,8 @@ void Application::Update()
     m_computeShader.Use();
     m_computeShader.SetUniformVec2("uniResolution", textureWidth, textureHeight);
     m_computeShader.SetUniformInt("uniRange", range);
-    m_computeShader.SetUniformVec2("uniSurvival", survivalRangeMin, survivalRangeMax);
-    m_computeShader.SetUniformVec2("uniBirth", birthRangeMin, birthRangeMax);
+    // m_computeShader.SetUniformVec2("uniSurvival", survivalRangeMin, survivalRangeMax);
+    // m_computeShader.SetUniformVec2("uniBirth", birthRangeMin, birthRangeMax);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     m_frameBuffer.Unbind();
 

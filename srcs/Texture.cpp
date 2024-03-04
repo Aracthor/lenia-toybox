@@ -12,8 +12,7 @@ Texture::Texture(int width, int height)
     glGenTextures(1, &m_textureID);
     Bind();
     {
-        const GLenum format = GL_RED;
-        glTexImage2D(GL_TEXTURE_2D, 0, format, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, nullptr);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_R32F, m_width, m_height, 0, GL_RED, GL_FLOAT, nullptr);
     }
 
     // Set the filtering mode.
@@ -50,16 +49,15 @@ void Texture::AttachToFrameBuffer(const FrameBuffer& frameBuffer) const
 
 void Texture::FillWithRandom()
 {
-    std::vector<GLubyte> bytes;
+    std::vector<float> values;
     {
-        int byte_count = m_width * m_height;
-        bytes.reserve(byte_count);
-        while (byte_count-- > 0)
-            bytes.push_back(random() % 0x100);
+        int pixel_count = m_width * m_height;
+        values.reserve(pixel_count);
+        while (pixel_count-- > 0)
+            values.push_back(static_cast<float>(random() % 100000 + 1) / 100000.f);
     }
 
     Bind();
-    const GLenum format = GL_RED;
-    glTexImage2D(GL_TEXTURE_2D, 0, format, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, bytes.data());
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_R32F, m_width, m_height, 0, GL_RED, GL_FLOAT, values.data());
     Unbind();
 }

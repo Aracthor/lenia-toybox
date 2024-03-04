@@ -2,8 +2,6 @@
 
 precision mediump float;
 
-in vec4 gl_FragCoord;
-
 uniform vec2 uniResolution;
 uniform sampler2D display_texture;
 

@@ -18,7 +18,7 @@ GLuint CompileShader(const char* parShaderFileName, GLenum parShaderType)
     }
 
     ifs.seekg(0, ifs.end);
-    uint fileSize = ifs.tellg();
+    int fileSize = ifs.tellg();
     ifs.seekg(0, ifs.beg);
     char* fileContent = new char[fileSize + 1];
     ifs.read(fileContent, fileSize);

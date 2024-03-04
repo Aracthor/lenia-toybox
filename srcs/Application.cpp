@@ -44,6 +44,13 @@ const int windowHeight = 600;
 
 // Lenia
 const int range = 15;
+
+void swap(const Texture*& textureA, const Texture*& textureB)
+{
+    const Texture* tmp = textureA;
+    textureA = textureB;
+    textureB = tmp;
+}
 } // namespace
 
 Application::Application()
@@ -110,5 +117,5 @@ void Application::Update()
 
     m_window.Refresh();
 
-    std::swap(m_inputTexture, m_outputTexture);
+    swap(m_inputTexture, m_outputTexture);
 }

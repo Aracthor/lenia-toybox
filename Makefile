@@ -43,6 +43,7 @@ LD_WEBASM_FLAGS= -O3                     \
                  -s MIN_WEBGL_VERSION=2  \
                  -s MAX_WEBGL_VERSION=2  \
                  -s FULL_ES3=1           \
+                 --preload-files=shaders/\
 
 
 SRCS_FILES=     main.cpp          \

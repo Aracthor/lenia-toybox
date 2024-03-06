@@ -16,6 +16,7 @@ public:
     void AttachToFrameBuffer(const FrameBuffer& frameBuffer) const;
 
     void FillWithRandom();
+    void FillWithTextureFile(const char* fileName);
 
 private:
     const int m_width;

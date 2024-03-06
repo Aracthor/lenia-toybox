@@ -64,7 +64,8 @@ Application::Application()
     , m_inputTexture(&m_textures[0])
     , m_outputTexture(&m_textures[1])
 {
-    m_textures[0].FillWithRandom();
+    // m_textures[0].FillWithRandom();
+    m_textures[0].FillWithTextureFile("startups/orbium.bmp");
 }
 
 int Application::Run()

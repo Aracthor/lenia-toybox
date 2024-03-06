@@ -1,10 +1,23 @@
 #include "Application.hpp"
 
-#include <cstdlib>
+#include "Config.hpp"
 
-int main()
+#include <cstdlib>
+#include <exception>
+#include <iostream>
+
+int main(int argc, char** argv)
 {
-    srandom(std::time(nullptr));
-    Application app;
-    return app.Run();
+    try
+    {
+        srandom(std::time(nullptr));
+        const Config config = parse_command_line(argc, argv);
+        Application app(config);
+        return app.Run();
+    }
+    catch (const std::exception& exception)
+    {
+        std::cerr << "Fatal error: " << exception.what() << std::endl;
+        return 2;
+    }
 }

@@ -49,6 +49,7 @@ LD_WEBASM_FLAGS= -O3                     \
 SRCS_FILES=     main.cpp          \
                 Application.cpp   \
                 Clock.cpp         \
+                Config.cpp        \
                 FrameBuffer.cpp   \
                 ShaderProgram.cpp \
                 Texture.cpp       \

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Clock.hpp"
+#include "Config.hpp"
 #include "FrameBuffer.hpp"
 #include "ShaderProgram.hpp"
 #include "Texture.hpp"
@@ -9,12 +10,14 @@
 class Application
 {
 public:
-    Application();
+    Application(const Config& config);
 
     int Run();
 
 private:
     void Update();
+
+    const Config m_config;
 
     Clock m_clock;
     Window m_window;

@@ -8,9 +8,6 @@
 
 namespace
 {
-const int framerateLimit = 60;
-const int textureWidth = 800;
-const int textureHeight = 600;
 const int windowWidth = 800;
 const int windowHeight = 600;
 
@@ -53,13 +50,14 @@ void swap(const Texture*& textureA, const Texture*& textureB)
 }
 } // namespace
 
-Application::Application()
-    : m_window("Lenia Toybox", windowWidth, windowHeight)
+Application::Application(const Config& config)
+    : m_config(config)
+    , m_window("Lenia Toybox", windowWidth, windowHeight)
     , m_computeShader("shaders/display_texture.vert", "shaders/lenia.frag")
     , m_displayShader("shaders/display_texture.vert", "shaders/display_texture.frag")
     , m_textures{
-        Texture(textureWidth, textureHeight),
-        Texture(textureWidth, textureHeight),
+        Texture(m_config.width, m_config.height),
+        Texture(m_config.width, m_config.height),
     }
     , m_inputTexture(&m_textures[0])
     , m_outputTexture(&m_textures[1])
@@ -78,14 +76,14 @@ int Application::Run()
 
     m_running = true;
 #ifdef __EMSCRIPTEN__
-    emscripten_set_main_loop_timing(EM_TIMING_SETTIMEOUT, framerateLimit);
+    emscripten_set_main_loop_timing(EM_TIMING_SETTIMEOUT, m_config.framerate);
     emscripten_set_main_loop_arg(mainLoop, this, 0, true);
 #else
     while (m_running)
     {
         m_clock.Update();
         const int elapsedTimeInUs = m_clock.GetElapsedTimeInUs();
-        const int frameTimeInUs = 1000000 / framerateLimit;
+        const int frameTimeInUs = 1000000 / m_config.framerate;
         const int timeToWaitInUs = frameTimeInUs - elapsedTimeInUs;
         if (timeToWaitInUs > 0)
             usleep(timeToWaitInUs);
@@ -104,7 +102,7 @@ void Application::Update()
     m_outputTexture->AttachToFrameBuffer(m_frameBuffer);
     m_inputTexture->Bind();
     m_computeShader.Use();
-    m_computeShader.SetUniformVec2("uniResolution", textureWidth, textureHeight);
+    m_computeShader.SetUniformVec2("uniResolution", m_config.width, m_config.height);
     m_computeShader.SetUniformInt("uniRange", range);
     // m_computeShader.SetUniformVec2("uniSurvival", survivalRangeMin, survivalRangeMax);
     // m_computeShader.SetUniformVec2("uniBirth", birthRangeMin, birthRangeMax);

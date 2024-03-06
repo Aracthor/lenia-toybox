@@ -13,10 +13,10 @@ const int windowHeight = 600;
 
 // Conway's life
 // const int range = 1;
-// const int survivalRangeMin = 2;
-// const int survivalRangeMax = 3;
-// const int birthRangeMin = 3;
-// const int birthRangeMax = 3;
+const int survivalRangeMin = 2;
+const int survivalRangeMax = 3;
+const int birthRangeMin = 3;
+const int birthRangeMax = 3;
 
 // Bosco's rule
 // const int range = 5;
@@ -26,11 +26,11 @@ const int windowHeight = 600;
 // const int birthRangeMax = 45;
 
 // Primordia
-// const int range = 1;
-// const float survivalRangeMin = 0.19;
-// const float survivalRangeMax = 0.33;
-// const float birthRangeMin = 0.20;
-// const float birthRangeMax = 0.25;
+const int range = 1;
+const float survivalRangeMinf = 0.19;
+const float survivalRangeMaxf = 0.33;
+const float birthRangeMinf = 0.20;
+const float birthRangeMaxf = 0.25;
 
 // Proto-Lenia Primordia
 // const int range = 5;
@@ -40,7 +40,7 @@ const int windowHeight = 600;
 // const float birthRangeMax = 0.15;
 
 // Lenia
-const int range = 15;
+// const int range = 15;
 
 void swap(const Texture*& textureA, const Texture*& textureB)
 {
@@ -48,12 +48,27 @@ void swap(const Texture*& textureA, const Texture*& textureB)
     textureA = textureB;
     textureB = tmp;
 }
+
+const char* ComputeShaderProgram(Algorithm::Type type)
+{
+    switch (type)
+    {
+    case Algorithm::LargerThanLife:
+        return "shaders/larger-than-life.frag";
+    case Algorithm::Primordia:
+        return "shaders/primordia.frag";
+    case Algorithm::Lenia:
+        return "shaders/lenia.frag";
+    }
+    return nullptr;
+}
+
 } // namespace
 
 Application::Application(const Config& config)
     : m_config(config)
     , m_window("Lenia Toybox", windowWidth, windowHeight)
-    , m_computeShader("shaders/display_texture.vert", "shaders/lenia.frag")
+    , m_computeShader("shaders/display_texture.vert", ComputeShaderProgram(m_config.algorithm))
     , m_displayShader("shaders/display_texture.vert", "shaders/display_texture.frag")
     , m_textures{
         Texture(m_config.width, m_config.height),
@@ -107,11 +122,7 @@ void Application::Update()
 
     m_outputTexture->AttachToFrameBuffer(m_frameBuffer);
     m_inputTexture->Bind();
-    m_computeShader.Use();
-    m_computeShader.SetUniformVec2("uniResolution", m_config.width, m_config.height);
-    m_computeShader.SetUniformInt("uniRange", range);
-    // m_computeShader.SetUniformVec2("uniSurvival", survivalRangeMin, survivalRangeMax);
-    // m_computeShader.SetUniformVec2("uniBirth", birthRangeMin, birthRangeMax);
+    ConfigureComputeProgram();
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     m_frameBuffer.Unbind();
 
@@ -123,4 +134,24 @@ void Application::Update()
     m_window.Refresh();
 
     swap(m_inputTexture, m_outputTexture);
+}
+
+void Application::ConfigureComputeProgram() const
+{
+    m_computeShader.Use();
+    m_computeShader.SetUniformVec2("uniResolution", m_config.width, m_config.height);
+    m_computeShader.SetUniformInt("uniRange", range);
+    switch (m_config.algorithm)
+    {
+    case Algorithm::LargerThanLife:
+        m_computeShader.SetUniformInt2("uniSurvival", survivalRangeMin, survivalRangeMax);
+        m_computeShader.SetUniformInt2("uniBirth", birthRangeMin, birthRangeMax);
+        break;
+    case Algorithm::Primordia:
+        m_computeShader.SetUniformVec2("uniSurvival", survivalRangeMinf, survivalRangeMaxf);
+        m_computeShader.SetUniformVec2("uniBirth", birthRangeMinf, birthRangeMaxf);
+        break;
+    case Algorithm::Lenia:
+        break;
+    }
 }

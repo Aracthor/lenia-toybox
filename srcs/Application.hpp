@@ -17,6 +17,8 @@ public:
 private:
     void Update();
 
+    void ConfigureComputeProgram() const;
+
     const Config m_config;
 
     Clock m_clock;

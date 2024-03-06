@@ -4,6 +4,7 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <unordered_map>
 
 namespace
 {
@@ -99,6 +100,34 @@ private:
     const char*& m_data;
 };
 
+class AlgorithmProcessor : public IParameterProcessor
+{
+public:
+    AlgorithmProcessor(Algorithm::Type& data)
+        : m_data(data)
+    {
+    }
+
+    void Process(ArgIterator& argIterator) override
+    {
+        const std::unordered_map<std::string, Algorithm::Type> algorithms = {
+            {"larger-than-life", Algorithm::LargerThanLife},
+            {"primordia", Algorithm::Primordia},
+            {"lenia", Algorithm::Lenia},
+        };
+
+        const std::string nextArg = *argIterator;
+        argIterator++;
+        auto it = algorithms.find(nextArg);
+        if (it == algorithms.end())
+            throw std::invalid_argument(std::string("Unknown algorithm: ") + nextArg);
+        m_data = it->second;
+    }
+
+private:
+    Algorithm::Type& m_data;
+};
+
 class ConfigParameter
 {
 public:
@@ -124,10 +153,13 @@ Config parse_command_line(int argc, char** argv)
 
     ArgIterator iterator(argc, argv);
     ConfigParameter parameters[] = {
+        // clang-format off
         {"-w", new IntegerProcessor(config.width)},
         {"-h", new IntegerProcessor(config.height)},
         {"-f", new IntegerProcessor(config.framerate)},
         {"-s", new StringProcessor(config.startupFileName)},
+        {"-a", new AlgorithmProcessor(config.algorithm)},
+        // clang-format on
     };
 
     while (iterator)

@@ -1,6 +1,7 @@
 #include "Config.hpp"
 
 #include <algorithm>
+#include <memory>
 #include <stdexcept>
 #include <string>
 
@@ -50,16 +51,23 @@ bool isnumber(const char* str)
     return true;
 }
 
-class ConfigParameter
+class IParameterProcessor
 {
 public:
-    ConfigParameter(const char* flag, int& data)
-        : m_flag(flag)
-        , m_data(data)
+    virtual ~IParameterProcessor() = default;
+
+    virtual void Process(ArgIterator& argIterator) = 0;
+};
+
+class IntegerProcessor : public IParameterProcessor
+{
+public:
+    IntegerProcessor(int& data)
+        : m_data(data)
     {
     }
 
-    void Process(ArgIterator& argIterator)
+    void Process(ArgIterator& argIterator) override
     {
         const char* nextArg = *argIterator;
         argIterator++;
@@ -68,11 +76,44 @@ public:
         m_data = std::atoi(nextArg);
     }
 
+private:
+    int& m_data;
+};
+
+class StringProcessor : public IParameterProcessor
+{
+public:
+    StringProcessor(const char*& data)
+        : m_data(data)
+    {
+    }
+
+    void Process(ArgIterator& argIterator) override
+    {
+        const char* nextArg = *argIterator;
+        argIterator++;
+        m_data = nextArg;
+    }
+
+private:
+    const char*& m_data;
+};
+
+class ConfigParameter
+{
+public:
+    ConfigParameter(const char* flag, IParameterProcessor* processor)
+        : m_flag(flag)
+        , m_processor(processor)
+    {
+    }
+
+    IParameterProcessor* Processor() { return m_processor.get(); }
     bool Matches(const std::string& arg) const { return m_flag == arg; }
 
 private:
     const std::string m_flag;
-    int& m_data;
+    std::unique_ptr<IParameterProcessor> m_processor;
 };
 
 } // namespace
@@ -83,9 +124,10 @@ Config parse_command_line(int argc, char** argv)
 
     ArgIterator iterator(argc, argv);
     ConfigParameter parameters[] = {
-        {"-w", config.width},
-        {"-h", config.height},
-        {"-f", config.framerate},
+        {"-w", new IntegerProcessor(config.width)},
+        {"-h", new IntegerProcessor(config.height)},
+        {"-f", new IntegerProcessor(config.framerate)},
+        {"-s", new StringProcessor(config.startupFileName)},
     };
 
     while (iterator)
@@ -96,7 +138,7 @@ Config parse_command_line(int argc, char** argv)
         auto it = std::find_if(std::begin(parameters), std::end(parameters), IsFlag);
         if (it == std::end(parameters))
             throw std::invalid_argument(std::string("Unknown argument ") + arg);
-        it->Process(iterator);
+        it->Processor()->Process(iterator);
     }
 
     return config;

@@ -216,6 +216,7 @@ Config parse_command_line(int argc, char** argv)
         {"-p", new BooleanProcessor(config.pause)},
 
         {"-a", new AlgorithmProcessor(config.algorithm)},
+        {"-t", new FloatProcessor(config.timestamp)},
         {"-r", new IntegerProcessor(config.range)},
         {"--survival-min", new FloatProcessor(config.survivalRangeMin)},
         {"--survival-max", new FloatProcessor(config.survivalRangeMax)},

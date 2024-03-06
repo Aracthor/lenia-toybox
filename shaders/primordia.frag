@@ -6,11 +6,9 @@ uniform vec2 uniResolution;
 uniform sampler2D input_texture;
 
 uniform int uniRange;
+uniform float uniDelaTime;
 uniform vec2 uniSurvival;
 uniform vec2 uniBirth;
-
-const float T = 10.0;
-const float dt = 1.0 / T;
 
 out vec4 frag_color;
 
@@ -40,11 +38,11 @@ void main()
     float color = texture(input_texture, uv).r;
     if (average_value >= uniBirth.x && average_value <= uniBirth.y)
     {
-        color += dt;
+        color += uniDelaTime;
     }
     else if (average_value < uniSurvival.x || average_value > uniSurvival.y)
     {
-        color -= dt;
+        color -= uniDelaTime;
     }
     color = clamp(color, 0.0, 1.0);
     frag_color = vec4(color, color, color, 1.0);

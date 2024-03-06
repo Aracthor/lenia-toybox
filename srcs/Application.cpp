@@ -120,10 +120,12 @@ void Application::ConfigureComputeProgram() const
         m_computeShader.SetUniformInt2("uniBirth", m_config.birthRangeMin, m_config.birthRangeMax);
         break;
     case Algorithm::Primordia:
+        m_computeShader.SetUniformFloat("uniDelaTime", 1.f / m_config.timestamp);
         m_computeShader.SetUniformVec2("uniSurvival", m_config.survivalRangeMin, m_config.survivalRangeMax);
         m_computeShader.SetUniformVec2("uniBirth", m_config.birthRangeMin, m_config.birthRangeMax);
         break;
     case Algorithm::Lenia:
+        m_computeShader.SetUniformFloat("uniDelaTime", 1.f / m_config.timestamp);
         break;
     }
 }

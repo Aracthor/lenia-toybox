@@ -6,11 +6,9 @@ uniform vec2 uniResolution;
 uniform sampler2D input_texture;
 
 uniform int uniRange;
+uniform float uniDelaTime;
 
 out vec4 frag_color;
-
-const float T = 10.0;
-const float dt = 1.0 / T;
 
 // bell-shaped Gaussian function
 float bell(float x, float m, float s)
@@ -45,6 +43,6 @@ void main()
     const float m = 0.135;
     const float s = 0.014;
     float growth = bell(neighbours, m, s) * 2.0 - 1.0;
-    color = clamp(color + dt * growth, 0.0, 1.0);
+    color = clamp(color + uniDelaTime * growth, 0.0, 1.0);
     frag_color = vec4(color, color, color, 1.0);
 }

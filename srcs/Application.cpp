@@ -45,14 +45,15 @@ Application::Application(const Config& config)
     }
     , m_inputTexture(&m_textures[0])
     , m_outputTexture(&m_textures[1])
+    , m_processing(!m_config.pause)
 {
     if (m_config.startupFileName)
     {
-        m_textures[0].FillWithTextureFile(m_config.startupFileName);
+        m_textures[1].FillWithTextureFile(m_config.startupFileName);
     }
     else
     {
-        m_textures[0].FillWithRandom();
+        m_textures[1].FillWithRandom();
     }
 }
 
@@ -61,7 +62,7 @@ int Application::Run()
     auto mainLoop = [](void* data) {
         Application* application = reinterpret_cast<Application*>(data);
         application->Update();
-        application->m_running = !application->m_window.GotQuitEvent();
+        application->m_window.PollEvents(application->m_running, application->m_processing);
     };
 
     m_running = true;
@@ -89,11 +90,15 @@ void Application::Update()
 {
     m_window.Clear();
 
-    m_outputTexture->AttachToFrameBuffer(m_frameBuffer);
-    m_inputTexture->Bind();
-    ConfigureComputeProgram();
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    m_frameBuffer.Unbind();
+    if (m_processing)
+    {
+        swap(m_inputTexture, m_outputTexture);
+        m_outputTexture->AttachToFrameBuffer(m_frameBuffer);
+        m_inputTexture->Bind();
+        ConfigureComputeProgram();
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+        m_frameBuffer.Unbind();
+    }
 
     m_displayShader.Use();
     m_displayShader.SetUniformVec2("uniResolution", windowWidth, windowHeight);
@@ -101,8 +106,6 @@ void Application::Update()
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
     m_window.Refresh();
-
-    swap(m_inputTexture, m_outputTexture);
 }
 
 void Application::ConfigureComputeProgram() const

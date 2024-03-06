@@ -31,4 +31,5 @@ private:
     FrameBuffer m_frameBuffer;
 
     bool m_running = false;
+    bool m_processing = true;
 };

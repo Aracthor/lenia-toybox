@@ -80,6 +80,20 @@ public:
     virtual void Process(ArgIterator& argIterator) = 0;
 };
 
+class BooleanProcessor : public IParameterProcessor
+{
+public:
+    BooleanProcessor(bool& data)
+        : m_data(data)
+    {
+    }
+
+    void Process(ArgIterator& argIterator) override { m_data = true; }
+
+private:
+    bool& m_data;
+};
+
 class IntegerProcessor : public IParameterProcessor
 {
 public:
@@ -199,6 +213,7 @@ Config parse_command_line(int argc, char** argv)
         {"-h", new IntegerProcessor(config.height)},
         {"-f", new IntegerProcessor(config.framerate)},
         {"-s", new StringProcessor(config.startupFileName)},
+        {"-p", new BooleanProcessor(config.pause)},
 
         {"-a", new AlgorithmProcessor(config.algorithm)},
         {"-r", new IntegerProcessor(config.range)},

@@ -55,13 +55,14 @@ void Window::Refresh()
     SDL_GL_SwapWindow(m_window);
 }
 
-bool Window::GotQuitEvent()
+void Window::PollEvents(bool& running, bool& processing)
 {
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
         if (event.type == SDL_QUIT)
-            return true;
+            running = false;
+        else if (event.type == SDL_KEYDOWN && event.key.keysym.scancode == SDL_SCANCODE_P)
+            processing = !processing;
     }
-    return false;
 }

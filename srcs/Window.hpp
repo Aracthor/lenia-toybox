@@ -12,7 +12,7 @@ public:
 
     void Clear();
     void Refresh();
-    bool GotQuitEvent();
+    void PollEvents(bool& running, bool& processing);
 
 private:
     int m_width;

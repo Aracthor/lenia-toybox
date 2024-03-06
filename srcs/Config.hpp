@@ -16,6 +16,7 @@ struct Config
     int height = 600;
     int framerate = 60;
     const char* startupFileName = nullptr;
+    bool pause = false;
 
     Algorithm::Type algorithm = Algorithm::Lenia;
     int range = 15;

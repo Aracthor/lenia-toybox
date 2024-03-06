@@ -18,6 +18,7 @@ struct Config
     const char* startupFileName = nullptr;
 
     Algorithm::Type algorithm = Algorithm::Lenia;
+    int range = 15;
 };
 
 Config parse_command_line(int argc, char** argv);

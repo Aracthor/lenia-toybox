@@ -12,35 +12,28 @@ const int windowWidth = 800;
 const int windowHeight = 600;
 
 // Conway's life
-// const int range = 1;
 const int survivalRangeMin = 2;
 const int survivalRangeMax = 3;
 const int birthRangeMin = 3;
 const int birthRangeMax = 3;
 
 // Bosco's rule
-// const int range = 5;
 // const int survivalRangeMin = 33;
 // const int survivalRangeMax = 57;
 // const int birthRangeMin = 34;
 // const int birthRangeMax = 45;
 
 // Primordia
-const int range = 1;
 const float survivalRangeMinf = 0.19;
 const float survivalRangeMaxf = 0.33;
 const float birthRangeMinf = 0.20;
 const float birthRangeMaxf = 0.25;
 
 // Proto-Lenia Primordia
-// const int range = 5;
 // const float survivalRangeMin = 0.12;
 // const float survivalRangeMax = 0.15;
 // const float birthRangeMin = 0.12;
 // const float birthRangeMax = 0.15;
-
-// Lenia
-// const int range = 15;
 
 void swap(const Texture*& textureA, const Texture*& textureB)
 {
@@ -140,7 +133,7 @@ void Application::ConfigureComputeProgram() const
 {
     m_computeShader.Use();
     m_computeShader.SetUniformVec2("uniResolution", m_config.width, m_config.height);
-    m_computeShader.SetUniformInt("uniRange", range);
+    m_computeShader.SetUniformInt("uniRange", m_config.range);
     switch (m_config.algorithm)
     {
     case Algorithm::LargerThanLife:

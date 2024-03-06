@@ -158,7 +158,9 @@ Config parse_command_line(int argc, char** argv)
         {"-h", new IntegerProcessor(config.height)},
         {"-f", new IntegerProcessor(config.framerate)},
         {"-s", new StringProcessor(config.startupFileName)},
+
         {"-a", new AlgorithmProcessor(config.algorithm)},
+        {"-r", new IntegerProcessor(config.range)},
         // clang-format on
     };
 

@@ -39,13 +39,33 @@ private:
     char** m_argv;
 };
 
-bool isnumber(const char* str)
+bool isNumber(const char* str)
 {
     if (*str == '-')
         str++;
     while (*str)
     {
         if (!std::isdigit(*str))
+            return false;
+        str++;
+    }
+    return true;
+}
+
+bool isDecimalNumber(const char* str)
+{
+    if (*str == '-')
+        str++;
+    int dots = 0;
+    while (*str)
+    {
+        if (*str == '.')
+        {
+            dots++;
+            if (dots > 1)
+                return false;
+        }
+        else if (!std::isdigit(*str))
             return false;
         str++;
     }
@@ -72,13 +92,34 @@ public:
     {
         const char* nextArg = *argIterator;
         argIterator++;
-        if (!isnumber(nextArg))
+        if (!isNumber(nextArg))
             throw std::invalid_argument(std::string("Expected number, but got: ") + nextArg);
         m_data = std::atoi(nextArg);
     }
 
 private:
     int& m_data;
+};
+
+class FloatProcessor : public IParameterProcessor
+{
+public:
+    FloatProcessor(float& data)
+        : m_data(data)
+    {
+    }
+
+    void Process(ArgIterator& argIterator) override
+    {
+        const char* nextArg = *argIterator;
+        argIterator++;
+        if (!isDecimalNumber(nextArg))
+            throw std::invalid_argument(std::string("Expected decimal number, but got: ") + nextArg);
+        m_data = std::atof(nextArg);
+    }
+
+private:
+    float& m_data;
 };
 
 class StringProcessor : public IParameterProcessor
@@ -161,6 +202,10 @@ Config parse_command_line(int argc, char** argv)
 
         {"-a", new AlgorithmProcessor(config.algorithm)},
         {"-r", new IntegerProcessor(config.range)},
+        {"--survival-min", new FloatProcessor(config.survivalRangeMin)},
+        {"--survival-max", new FloatProcessor(config.survivalRangeMax)},
+        {"--birth-min", new FloatProcessor(config.birthRangeMin)},
+        {"--birth-max", new FloatProcessor(config.birthRangeMax)},
         // clang-format on
     };
 

@@ -11,30 +11,6 @@ namespace
 const int windowWidth = 800;
 const int windowHeight = 600;
 
-// Conway's life
-const int survivalRangeMin = 2;
-const int survivalRangeMax = 3;
-const int birthRangeMin = 3;
-const int birthRangeMax = 3;
-
-// Bosco's rule
-// const int survivalRangeMin = 33;
-// const int survivalRangeMax = 57;
-// const int birthRangeMin = 34;
-// const int birthRangeMax = 45;
-
-// Primordia
-const float survivalRangeMinf = 0.19;
-const float survivalRangeMaxf = 0.33;
-const float birthRangeMinf = 0.20;
-const float birthRangeMaxf = 0.25;
-
-// Proto-Lenia Primordia
-// const float survivalRangeMin = 0.12;
-// const float survivalRangeMax = 0.15;
-// const float birthRangeMin = 0.12;
-// const float birthRangeMax = 0.15;
-
 void swap(const Texture*& textureA, const Texture*& textureB)
 {
     const Texture* tmp = textureA;
@@ -137,12 +113,12 @@ void Application::ConfigureComputeProgram() const
     switch (m_config.algorithm)
     {
     case Algorithm::LargerThanLife:
-        m_computeShader.SetUniformInt2("uniSurvival", survivalRangeMin, survivalRangeMax);
-        m_computeShader.SetUniformInt2("uniBirth", birthRangeMin, birthRangeMax);
+        m_computeShader.SetUniformInt2("uniSurvival", m_config.survivalRangeMin, m_config.survivalRangeMax);
+        m_computeShader.SetUniformInt2("uniBirth", m_config.birthRangeMin, m_config.birthRangeMax);
         break;
     case Algorithm::Primordia:
-        m_computeShader.SetUniformVec2("uniSurvival", survivalRangeMinf, survivalRangeMaxf);
-        m_computeShader.SetUniformVec2("uniBirth", birthRangeMinf, birthRangeMaxf);
+        m_computeShader.SetUniformVec2("uniSurvival", m_config.survivalRangeMin, m_config.survivalRangeMax);
+        m_computeShader.SetUniformVec2("uniBirth", m_config.birthRangeMin, m_config.birthRangeMax);
         break;
     case Algorithm::Lenia:
         break;

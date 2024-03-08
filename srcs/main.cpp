@@ -13,7 +13,7 @@ int main(int argc, char** argv)
         srandom(std::time(nullptr));
         const Config config = parse_command_line(argc, argv);
         Application app(config);
-        return app.Run();
+        return app.Run(config.framerate);
     }
     catch (const std::exception& exception)
     {

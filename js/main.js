@@ -1,5 +1,7 @@
 "use strict"
 
+import Module from './bin/lenia-toybox.js'
+
 const onGlobalPageLoad = async () => {
 
     const log = (text) => {
@@ -17,7 +19,6 @@ const onGlobalPageLoad = async () => {
     window.addEventListener("error", onBasicGlobalPageError);
 
     const errorText = document.querySelector("#errorText");
-    const renderArea = document.querySelector("#renderArea");
     const canvas = document.querySelector("#emscriptenCanvas");
 
     const showErrorText = (htmlText) => {
@@ -117,35 +118,20 @@ const onGlobalPageLoad = async () => {
         return;
     }
 
-    const Module = {
+    const options = {
         print: (text) => { log(`${text}`); },
         printErr: (text) => { log(`[ERROR] ${text}`); },
 
         locateFile: (path, prefix) => { return "js/bin/" + path; },
 
         canvas: canvas,
-        arguments: [
-        ],
+        arguments: [],
     };
 
-    // this is needed by the wasm side
-    window.Module = Module;
-
-    log("Downloading main script...")
+    log("Loading main script...")
     try {
 
-        const scriptLoadingUtility = (src) => {
-            return new Promise((resolve, reject) => {
-                const scriptElement = document.createElement("script");
-                scriptElement.src = src;
-                scriptElement.onprogress = (event) => log("event: " + event);
-                scriptElement.onload = resolve;
-                scriptElement.onerror = reject;
-                document.head.appendChild(scriptElement);
-            });
-        };
-
-        await scriptLoadingUtility("./js/bin/lenia-toybox.js")
+        Module(options);
 
         log("wasm script: loading successful");
 

@@ -36,14 +36,17 @@ CXX_FLAGS=  -Wall -Werror   \
 
 LD_NATIVE_FLAGS= -O3 -lSDL2 -lGL -lGLEW
 
-LD_WEBASM_FLAGS= -O3                     \
-                 -s WASM=1               \
-                 -s USE_SDL=2            \
-                 -s DISABLE_DEPRECATED_FIND_EVENT_TARGET_BEHAVIOR=0  \
-                 -s MIN_WEBGL_VERSION=2  \
-                 -s MAX_WEBGL_VERSION=2  \
-                 -s FULL_ES3=1           \
-                 --preload-files=shaders/\
+LD_WEBASM_FLAGS= -O3                             \
+                 -s WASM=1                       \
+                 -s USE_SDL=2                    \
+                 -s MIN_WEBGL_VERSION=2          \
+                 -s MAX_WEBGL_VERSION=2          \
+                 -s FULL_ES3=1                   \
+                                                 \
+                 --preload-files=shaders/        \
+                                                 \
+                 -s MODULARIZE=1                 \
+                 -s EXPORT_ES6=1                 \
 
 
 SRCS_FILES=     main.cpp          \

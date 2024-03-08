@@ -5,32 +5,20 @@
     <title>Lenia - Toybox</title>
     <style>
       #renderArea {
-        border: 0px none;
-        margin: 0px auto;
-        padding: 0px none;
-        background-color: black;
         width: 800px;
         height: 600px;
+        background-color: black;
       }
 
       #errorText {
         font-size: 30px;
-        margin: 0px auto;
-        padding: 0px none;
-        border: 0px none;
         color: white;
         font-family: courier, courier new, serif;
         text-align: center;
-        outline: none;
-        display: block;
       }
 
       /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
       #emscriptenCanvas {
-        border: 0px none;
-        margin: 0px auto;
-        padding: 0px none;
-        display: block;
         width: 800px;
         height: 600px;
         display: none;
@@ -38,28 +26,35 @@
 
       #loggerOutput {
         width: 99%;
-        margin: 0px auto;
-        border: 0px none;
-        padding: 0px none;
         background-color: black;
         color: white;
         font-family: courier, courier new, serif;
-        outline: none;
-        display: block;
       }
+
+      #content {
+        display: flex;
+        margin: 0px auto;
+        max-width: 1000px;
+      }
+
     </style>
     <script type="module" src="js/main.js"></script>
   </head>
   <body>
 
-    <div id="renderArea">
-      <canvas id="emscriptenCanvas" width="800" height="600"></canvas>
-      <p id="errorText">Loading...</p>
+    <div id="content">
+      <div id="renderArea">
+        <canvas id="emscriptenCanvas" width="800" height="600"></canvas>
+        <p id="errorText">Loading...</p>
+      </div>
+      <fieldset>
+        <legend>Configuration</legend>
+        <button onclick='window.module._app_restart();'>Restart</button>
+      </fieldset>
     </div>
     <hr />
 
     <textarea id="loggerOutput" rows="10" readonly></textarea>
-
 
   </body>
 </html>

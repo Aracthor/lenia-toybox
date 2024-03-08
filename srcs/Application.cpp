@@ -1,5 +1,7 @@
 #include "Application.hpp"
 
+#include "LifeProcessor.hpp"
+
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
@@ -10,13 +12,23 @@ namespace
 {
 const int windowWidth = 800;
 const int windowHeight = 600;
+
+Application* g_app;
+Config g_config;
 } // namespace
 
 Application::Application(const Config& config)
     : m_window("Lenia Toybox", windowWidth, windowHeight)
-    , m_lifeProcessor(config)
+    , m_lifeProcessor(new LifeProcessor(config))
     , m_displayShader("shaders/display_texture.vert", "shaders/display_texture.frag")
 {
+    g_app = this;
+    g_config = config;
+}
+
+Application::~Application()
+{
+    delete m_lifeProcessor;
 }
 
 int Application::Run(int framerate)
@@ -24,7 +36,7 @@ int Application::Run(int framerate)
     auto mainLoop = [](void* data) {
         Application* application = reinterpret_cast<Application*>(data);
         application->Update();
-        application->m_window.PollEvents(application->m_running, application->m_lifeProcessor.Processing());
+        application->m_window.PollEvents(application->m_running, application->m_lifeProcessor->Processing());
     };
 
     m_running = true;
@@ -48,16 +60,29 @@ int Application::Run(int framerate)
     return 0;
 }
 
+void Application::Restart()
+{
+    delete m_lifeProcessor;
+    m_lifeProcessor = new LifeProcessor(g_config);
+}
+
 void Application::Update()
 {
     m_window.Clear();
 
-    m_lifeProcessor.Update();
+    m_lifeProcessor->Update();
 
     m_displayShader.Use();
     m_displayShader.SetUniformVec2("uniResolution", windowWidth, windowHeight);
-    m_lifeProcessor.OutputTexture()->Bind();
+    m_lifeProcessor->OutputTexture()->Bind();
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
     m_window.Refresh();
 }
+
+#ifdef __EMSCRIPTEN__
+extern "C"
+{
+    void EMSCRIPTEN_KEEPALIVE app_restart() { g_app->Restart(); }
+}
+#endif // __EMSCRIPTEN__

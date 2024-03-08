@@ -131,7 +131,9 @@ const onGlobalPageLoad = async () => {
     log("Loading main script...")
     try {
 
-        Module(options);
+        Module(options).then(function(mymod) {
+            window.module = mymod;
+        });
 
         log("wasm script: loading successful");
 

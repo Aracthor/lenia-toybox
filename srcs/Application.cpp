@@ -84,5 +84,8 @@ void Application::Update()
 extern "C"
 {
     void EMSCRIPTEN_KEEPALIVE app_restart() { g_app->Restart(); }
+
+    void EMSCRIPTEN_KEEPALIVE app_config_width(int width) { g_config.width = width; }
+    void EMSCRIPTEN_KEEPALIVE app_config_height(int height) { g_config.height = height; }
 }
 #endif // __EMSCRIPTEN__

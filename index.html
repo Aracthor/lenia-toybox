@@ -35,10 +35,15 @@
         display: flex;
         margin: 0px auto;
         max-width: 1000px;
+
+        input {
+          width: 50px;
+        }
       }
 
     </style>
     <script type="module" src="js/main.js"></script>
+    <script src="js/config_form.js"></script>
   </head>
   <body>
 
@@ -47,9 +52,19 @@
         <canvas id="emscriptenCanvas" width="800" height="600"></canvas>
         <p id="errorText">Loading...</p>
       </div>
+
       <fieldset>
         <legend>Configuration</legend>
-        <button onclick='window.module._app_restart();'>Restart</button>
+
+        <button onclick='restart();'>Restart</button>
+        <br />
+
+        <input id="width"  type="text" oninput='set_config("width");'  value="800" />
+        <label for="width">Width</label>
+        <br />
+        <input id="height" type="text" oninput='set_config("height");' value="600" />
+        <label for="height">Height</label>
+        <br />
       </fieldset>
     </div>
     <hr />

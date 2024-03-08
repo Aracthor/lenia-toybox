@@ -1,0 +1,36 @@
+#renderArea {
+  width: 800px;
+  height: 600px;
+  background-color: black;
+}
+
+#errorText {
+  font-size: 30px;
+  color: white;
+  font-family: courier, courier new, serif;
+  text-align: center;
+}
+
+/* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+#emscriptenCanvas {
+  width: 800px;
+  height: 600px;
+  display: none;
+}
+
+#loggerOutput {
+  width: 99%;
+  background-color: black;
+  color: white;
+  font-family: courier, courier new, serif;
+}
+
+#content {
+  display: flex;
+  margin: 0px auto;
+  max-width: 1000px;
+
+  input {
+    width: 50px;
+  }
+}

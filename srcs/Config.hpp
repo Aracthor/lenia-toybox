@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 namespace Algorithm
 {
 enum Type
@@ -15,7 +17,7 @@ struct Config
     int width = 800;
     int height = 600;
     int framerate = 60;
-    const char* startupFileName = nullptr;
+    std::string startupFileName;
     bool pause = false;
 
     Algorithm::Type algorithm = Algorithm::Lenia;

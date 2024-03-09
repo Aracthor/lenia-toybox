@@ -87,5 +87,10 @@ extern "C"
 
     void EMSCRIPTEN_KEEPALIVE app_config_width(int width) { g_config.width = width; }
     void EMSCRIPTEN_KEEPALIVE app_config_height(int height) { g_config.height = height; }
+    void EMSCRIPTEN_KEEPALIVE app_config_startup(char* startup)
+    {
+        g_config.startupFileName = startup;
+        free(static_cast<void*>(startup));
+    }
 }
 #endif // __EMSCRIPTEN__

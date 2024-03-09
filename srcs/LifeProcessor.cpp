@@ -35,13 +35,13 @@ LifeProcessor::LifeProcessor(const Config& config)
     , m_outputTexture(&m_textures[1])
     , m_processing(!m_config.pause)
 {
-    if (m_config.startupFileName)
+    if (m_config.startupFileName.empty())
     {
-        m_textures[1].FillWithTextureFile(m_config.startupFileName);
+        m_textures[1].FillWithRandom();
     }
     else
     {
-        m_textures[1].FillWithRandom();
+        m_textures[1].FillWithTextureFile(m_config.startupFileName.c_str());
     }
 }
 

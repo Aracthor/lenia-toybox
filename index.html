@@ -21,12 +21,24 @@
         <button onclick='restart();'>Restart</button>
         <br />
 
-        <input id="width"  type="text" oninput='set_config("width");'  value="800" />
-        <label for="width">Width</label>
-        <br />
-        <input id="height" type="text" oninput='set_config("height");' value="600" />
-        <label for="height">Height</label>
-        <br />
+        <table>
+          <tr>
+            <td>
+              <label for="width">Width</label>
+              <input id="width"  type="text" oninput='set_config("width");'  value="800" />
+            </td>
+            <td>
+              <label for="height">Height</label>
+              <input id="height" type="text" oninput='set_config("height");' value="600" />
+            </td>
+          </tr>
+          <tr>
+            <select id="startup" onchange='set_config("startup");'>
+              <option value="" selected>(Random)</option>
+              <option value="startups/orbium.bmp">Orbium</option>
+            </select>
+          </tr>
+        </table>
       </fieldset>
     </div>
     <hr />

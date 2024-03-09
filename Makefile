@@ -48,9 +48,11 @@ LD_WEBASM_FLAGS= -O3                             \
                  -s FULL_ES3=1                   \
                                                  \
                  --preload-files=shaders/        \
+                 --preload-files=startups/       \
                                                  \
                  -s MODULARIZE=1                 \
                  -s EXPORT_ES6=1                 \
+                 -s EXPORTED_RUNTIME_METHODS="['stringToNewUTF8']"
 
 
 SRCS_FILES=     main.cpp          \

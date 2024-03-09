@@ -139,7 +139,7 @@ private:
 class StringProcessor : public IParameterProcessor
 {
 public:
-    StringProcessor(const char*& data)
+    StringProcessor(std::string& data)
         : m_data(data)
     {
     }
@@ -152,7 +152,7 @@ public:
     }
 
 private:
-    const char*& m_data;
+    std::string& m_data;
 };
 
 class AlgorithmProcessor : public IParameterProcessor

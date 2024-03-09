@@ -34,6 +34,10 @@ CXX_FLAGS=  -Wall -Werror   \
             -I $(INC_DIR)   \
             -O3
 
+CXX_NATIVE_FLAGS=
+
+CXX_WEBASM_FLAGS=-s USE_SDL=2
+
 LD_NATIVE_FLAGS= -O3 -lSDL2 -lGL -lGLEW
 
 LD_WEBASM_FLAGS= -O3                             \

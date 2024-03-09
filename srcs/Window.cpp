@@ -8,6 +8,7 @@ Window::Window(const char* name, int width, int height)
     : m_width(width)
     , m_height(height)
 {
+    SDL_SetHint(SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT, "#emscriptenCanvas");
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         std::cerr << "could not initialize sdl2: " << SDL_GetError() << std::endl;

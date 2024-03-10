@@ -165,18 +165,9 @@ public:
 
     void Process(ArgIterator& argIterator) override
     {
-        const std::unordered_map<std::string, Algorithm::Type> algorithms = {
-            {"larger-than-life", Algorithm::LargerThanLife},
-            {"primordia", Algorithm::Primordia},
-            {"lenia", Algorithm::Lenia},
-        };
-
         const std::string nextArg = *argIterator;
         argIterator++;
-        auto it = algorithms.find(nextArg);
-        if (it == algorithms.end())
-            throw std::invalid_argument(std::string("Unknown algorithm: ") + nextArg);
-        m_data = it->second;
+        m_data = Algorithm::FromName(nextArg);
     }
 
 private:
@@ -201,6 +192,23 @@ private:
 };
 
 } // namespace
+
+namespace Algorithm
+{
+Type FromName(const std::string& name)
+{
+    const std::unordered_map<std::string, Algorithm::Type> algorithms = {
+        {"larger-than-life", Algorithm::LargerThanLife},
+        {"primordia", Algorithm::Primordia},
+        {"lenia", Algorithm::Lenia},
+    };
+
+    auto it = algorithms.find(name);
+    if (it == algorithms.end())
+        throw std::invalid_argument(std::string("Unknown algorithm: ") + name);
+    return it->second;
+}
+} // namespace Algorithm
 
 Config parse_command_line(int argc, char** argv)
 {

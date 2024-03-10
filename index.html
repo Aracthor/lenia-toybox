@@ -21,43 +21,75 @@
         <button onclick='restart();'>Restart</button>
         <br />
 
-        <table>
-          <tr>
-            <td>
-              <label for="width">Width</label>
-            </td>
-            <td>
-              <input id="width"  type="text" oninput='set_config("width");'  value="800" />
-            </td>
-          <tr>
-          </tr>
-            <td>
-              <label for="height">Height</label>
-            </td>
-            <td>
-              <input id="height" type="text" oninput='set_config("height");' value="600" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label for="startup">Startup</label>
-            </td>
-            <td>
-              <select id="startup" onchange='set_config("startup");'>
-                <option value="" selected>(Random)</option>
-                <option value="startups/orbium.bmp">Orbium</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label for="pause">Pause start</label>
-            </td>
-            <td>
-              <input id="pause" type="checkbox" onchange='set_config("pause");' />
-            </td>
-          </tr>
-        </table>
+        <fieldset>
+          <legend>Grid</legend>
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <label for="width">Width</label>
+                </td>
+                <td>
+                  <input id="width"  type="text" oninput='set_config("width");'  value="800" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="height">Height</label>
+                </td>
+                <td>
+                  <input id="height" type="text" oninput='set_config("height");' value="600" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="startup">Startup</label>
+                </td>
+                <td>
+                  <select id="startup" onchange='set_config("startup");'>
+                    <option value="" selected>(Random)</option>
+                    <option value="startups/orbium.bmp">Orbium</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="pause">Pause start</label>
+                </td>
+                <td>
+                  <input id="pause" type="checkbox" onchange='set_config("pause");' />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </fieldset>
+ 
+        <fieldset>
+          <legend>Algorithm</legend>
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <label for="algorithm">Algorithm</label>
+                </td>
+                <td>
+                  <select id="algorithm" onchange='set_config("algorithm");'>
+                    <option value="larger-than-life">Larger than life</option>
+                    <option value="primordia">Promordia</option>
+                    <option value="lenia" selected>Lenia</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="range">Range</label>
+                </td>
+                <td>
+                  <input id="range" type="text" onchange='set_config("range");' value=15 />
+                </td>
+              </tr>
+            </tbody>
+          </table>
       </fieldset>
     </div>
     <hr />

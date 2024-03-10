@@ -10,6 +10,8 @@ enum Type
     Primordia,
     Lenia,
 };
+
+Type FromName(const std::string& name);
 } // namespace Algorithm
 
 struct Config

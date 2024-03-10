@@ -93,5 +93,12 @@ extern "C"
         free(static_cast<void*>(startup));
     }
     void EMSCRIPTEN_KEEPALIVE app_config_pause(bool pause) { g_config.pause = pause; }
+
+    void EMSCRIPTEN_KEEPALIVE app_config_range(int range) { g_config.range = range; }
+    void EMSCRIPTEN_KEEPALIVE app_config_algorithm(char* algorithm)
+    {
+        g_config.algorithm = Algorithm::FromName(algorithm);
+        free(static_cast<void*>(algorithm));
+    }
 }
 #endif // __EMSCRIPTEN__

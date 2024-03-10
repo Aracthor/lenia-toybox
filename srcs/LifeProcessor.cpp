@@ -76,6 +76,10 @@ void LifeProcessor::ConfigureComputeProgram() const
         break;
     case Algorithm::Lenia:
         m_computeShader.SetUniformFloat("uniDelaTime", 1.f / m_config.timestamp);
+        m_computeShader.SetUniformFloat("uniKernelGaussCenter", m_config.kernelGaussCenter);
+        m_computeShader.SetUniformFloat("uniKernelGaussWidth", m_config.kernelGaussWidth);
+        m_computeShader.SetUniformFloat("uniGrowthGaussCenter", m_config.growthGaussCenter);
+        m_computeShader.SetUniformFloat("uniGrowthGaussWidth", m_config.growthGaussWidth);
         break;
     }
 }

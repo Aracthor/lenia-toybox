@@ -29,6 +29,10 @@ struct Config
     float survivalRangeMax = 3.f;
     float birthRangeMin = 3.f;
     float birthRangeMax = 3.f;
+    float kernelGaussCenter = 0.5f;
+    float kernelGaussWidth = 0.15f;
+    float growthGaussCenter = 0.135f;
+    float growthGaussWidth = 0.014f;
 };
 
 Config parse_command_line(int argc, char** argv);

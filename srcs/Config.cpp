@@ -230,6 +230,10 @@ Config parse_command_line(int argc, char** argv)
         {"--survival-max", new FloatProcessor(config.survivalRangeMax)},
         {"--birth-min", new FloatProcessor(config.birthRangeMin)},
         {"--birth-max", new FloatProcessor(config.birthRangeMax)},
+        {"--kernel-center", new FloatProcessor(config.kernelGaussCenter)},
+        {"--kernel-width", new FloatProcessor(config.kernelGaussWidth)},
+        {"--growth-center", new FloatProcessor(config.growthGaussCenter)},
+        {"--growth-width", new FloatProcessor(config.growthGaussWidth)},
         // clang-format on
     };
 

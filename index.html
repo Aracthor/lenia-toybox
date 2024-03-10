@@ -74,6 +74,15 @@
  
         <fieldset>
           <legend>Algorithm</legend>
+          <label for="preset">Preset</label>
+          <select id="preset" onchange='set_preset();'>
+            <option value="conway-life">Conway's life</option>
+            <option value="bosco-rule">Bosco's rule</option>
+            <option value="primordia">Primordia</option>
+            <option value="primordia-proto-lenia">Primordia Proto-Lenia</option>
+            <option value="lenia" selected>Lenia</option>
+          </select>
+          <hr />
           <table>
             <tbody>
               <tr>
@@ -101,8 +110,8 @@
                   Survival Range
                 </td>
                 <td>
-                  <input id="survival_range_min" type="text" onchange='set_config("survival_range_min");' value=2.0 />
-                  <input id="survival_range_max" type="text" onchange='set_config("survival_range_max");' value=3.0 />
+                  <input id="survival_range_min" type="text" onchange='set_config("survival_range_min");' value=2 />
+                  <input id="survival_range_max" type="text" onchange='set_config("survival_range_max");' value=3 />
                 </td>
               </tr>
               <tr id="birth_range_field" hidden=true>
@@ -110,8 +119,8 @@
                   Birth Range
                 </td>
                 <td>
-                  <input id="birth_range_min" type="text" onchange='set_config("birth_range_min");' value=3.0 />
-                  <input id="birth_range_max" type="text" onchange='set_config("birth_range_max");' value=3.0 />
+                  <input id="birth_range_min" type="text" onchange='set_config("birth_range_min");' value=3 />
+                  <input id="birth_range_max" type="text" onchange='set_config("birth_range_max");' value=3 />
                 </td>
               </tr>
               <tr id="timestamp_field">

@@ -38,3 +38,67 @@ function set_algorithm() {
     });
     set_config("algorithm");
 }
+
+function set_preset() {
+    const preset_params = {
+        "conway-life": {
+            algorithm: "larger-than-life",
+            params: {
+                "range": 1,
+                "survival_range_min": 2,
+                "survival_range_max": 3,
+                "birth_range_min": 3,
+                "birth_range_max": 3,
+            },
+        },
+        "bosco-rule": {
+            algorithm: "larger-than-life",
+            params: {
+                "range": 5,
+                "survival_range_min": 33,
+                "survival_range_max": 57,
+                "birth_range_min": 34,
+                "birth_range_max": 45,
+            },
+        },
+        "primordia": {
+            algorithm: "primordia",
+            params: {
+                "range": 1,
+                "timestamp": 10,
+                "survival_range_min": 0.19,
+                "survival_range_max": 0.33,
+                "birth_range_min": 0.20,
+                "birth_range_max": 0.25,
+            },
+        },
+        "primordia-proto-lenia": {
+            algorithm: "primordia",
+            params: {
+                "range": 5,
+                "timestamp": 10,
+                "survival_range_min": 0.12,
+                "survival_range_max": 0.15,
+                "birth_range_min": 0.12,
+                "birth_range_max": 0.15,
+            },
+        },
+        "lenia": {
+            algorithm: "lenia",
+            params: {
+                "range": 15,
+                "timestamp": 10,
+            },
+        },
+    };
+
+    let preset_name = document.getElementById("preset").value;
+    let preset = preset_params[preset_name];
+    document.getElementById("algorithm").value = preset.algorithm;
+    set_algorithm(preset.algorithm);
+    for (const param in preset.params) {
+        let value = preset.params[param];
+        document.getElementById(param).value = value;
+        set_config(param);
+    }
+}

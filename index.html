@@ -25,18 +25,37 @@
           <tr>
             <td>
               <label for="width">Width</label>
-              <input id="width"  type="text" oninput='set_config("width");'  value="800" />
             </td>
             <td>
+              <input id="width"  type="text" oninput='set_config("width");'  value="800" />
+            </td>
+          <tr>
+          </tr>
+            <td>
               <label for="height">Height</label>
+            </td>
+            <td>
               <input id="height" type="text" oninput='set_config("height");' value="600" />
             </td>
           </tr>
           <tr>
-            <select id="startup" onchange='set_config("startup");'>
-              <option value="" selected>(Random)</option>
-              <option value="startups/orbium.bmp">Orbium</option>
-            </select>
+            <td>
+              <label for="startup">Startup</label>
+            </td>
+            <td>
+              <select id="startup" onchange='set_config("startup");'>
+                <option value="" selected>(Random)</option>
+                <option value="startups/orbium.bmp">Orbium</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="pause">Pause start</label>
+            </td>
+            <td>
+              <input id="pause" type="checkbox" onchange='set_config("pause");' />
+            </td>
           </tr>
         </table>
       </fieldset>

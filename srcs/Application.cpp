@@ -92,5 +92,6 @@ extern "C"
         g_config.startupFileName = startup;
         free(static_cast<void*>(startup));
     }
+    void EMSCRIPTEN_KEEPALIVE app_config_pause(bool pause) { g_config.pause = pause; }
 }
 #endif // __EMSCRIPTEN__

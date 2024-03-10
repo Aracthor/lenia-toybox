@@ -2,6 +2,10 @@ function restart() {
     window.module._app_restart();
 }
 
+function set_custom_preset() {
+    document.getElementById("preset").value = "(custom)";
+}
+
 function set_config(param_name) {
     const get_input_value = (elem_name) => {
         let element = document.getElementById(elem_name);
@@ -23,10 +27,19 @@ function set_config(param_name) {
     window.module[function_name](value);
 }
 
+function input_config(param_name) {
+    set_config(param_name)
+}
+
+function input_algorithm_config(param_name) {
+    set_custom_preset();
+    set_config(param_name)
+}
+
 function set_algorithm() {
     const algorithms_params = {
         "larger-than-life": ["survival_range_field", "birth_range_field"],
-        "primordia":        ["survival_range_field", "birth_range_field", "timestamp_field"],
+        "primordia":        ["timestamp_field", "survival_range_field", "birth_range_field"],
         "lenia":            ["timestamp_field"],
     };
 
@@ -37,6 +50,11 @@ function set_algorithm() {
         document.getElementById(param).hidden = !params_to_show.includes(param);
     });
     set_config("algorithm");
+}
+
+function input_algorithm() {
+    set_custom_preset();
+    set_algorithm()
 }
 
 function set_preset() {

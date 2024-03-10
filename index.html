@@ -30,7 +30,7 @@
                   <label for="width">Width</label>
                 </td>
                 <td>
-                  <input id="width"  type="text" oninput='set_config("width");'  value="800" />
+                  <input id="width"  type="text" oninput='input_config("width");'  value="800" />
                 </td>
               </tr>
               <tr>
@@ -38,7 +38,7 @@
                   <label for="height">Height</label>
                 </td>
                 <td>
-                  <input id="height" type="text" oninput='set_config("height");' value="600" />
+                  <input id="height" type="text" oninput='input_config("height");' value="600" />
                 </td>
               </tr>
               <tr>
@@ -46,7 +46,7 @@
                   <label for="framerate">Framerate</label>
                 </td>
                 <td>
-                  <input id="framerate" type="text" oninput='set_config("framerate");' value="60" />
+                  <input id="framerate" type="text" oninput='input_config("framerate");' value="60" />
                 </td>
               </tr>
               <tr>
@@ -54,7 +54,7 @@
                   <label for="startup">Startup</label>
                 </td>
                 <td>
-                  <select id="startup" onchange='set_config("startup");'>
+                  <select id="startup" onchange='input_config("startup");'>
                     <option value="" selected>(Random)</option>
                     <option value="startups/orbium.bmp">Orbium</option>
                   </select>
@@ -65,7 +65,7 @@
                   <label for="pause">Pause start</label>
                 </td>
                 <td>
-                  <input id="pause" type="checkbox" onchange='set_config("pause");' />
+                  <input id="pause" type="checkbox" onchange='input_config("pause");' />
                 </td>
               </tr>
             </tbody>
@@ -81,6 +81,7 @@
             <option value="primordia">Primordia</option>
             <option value="primordia-proto-lenia">Primordia Proto-Lenia</option>
             <option value="lenia" selected>Lenia</option>
+            <option value="(custom)" hidden>(Custom)</option>)
           </select>
           <hr />
           <table>
@@ -90,7 +91,7 @@
                   <label for="algorithm">Algorithm</label>
                 </td>
                 <td>
-                  <select id="algorithm" onchange='set_algorithm();'>
+                  <select id="algorithm" onchange='input_algorithm();'>
                     <option value="larger-than-life">Larger than life</option>
                     <option value="primordia">Promordia</option>
                     <option value="lenia" selected>Lenia</option>
@@ -102,7 +103,7 @@
                   <label for="range">Range</label>
                 </td>
                 <td>
-                  <input id="range" type="text" onchange='set_config("range");' value=15 />
+                  <input id="range" type="text" onchange='input_algorithm_config("range");' value=15 />
                 </td>
               </tr>
               <tr id="survival_range_field" hidden=true>
@@ -110,8 +111,8 @@
                   Survival Range
                 </td>
                 <td>
-                  <input id="survival_range_min" type="text" onchange='set_config("survival_range_min");' value=2 />
-                  <input id="survival_range_max" type="text" onchange='set_config("survival_range_max");' value=3 />
+                  <input id="survival_range_min" type="text" onchange='input_algorithm_config("survival_range_min");' value=2 />
+                  <input id="survival_range_max" type="text" onchange='input_algorithm_config("survival_range_max");' value=3 />
                 </td>
               </tr>
               <tr id="birth_range_field" hidden=true>
@@ -119,8 +120,8 @@
                   Birth Range
                 </td>
                 <td>
-                  <input id="birth_range_min" type="text" onchange='set_config("birth_range_min");' value=3 />
-                  <input id="birth_range_max" type="text" onchange='set_config("birth_range_max");' value=3 />
+                  <input id="birth_range_min" type="text" onchange='input_algorithm_config("birth_range_min");' value=3 />
+                  <input id="birth_range_max" type="text" onchange='input_algorithm_config("birth_range_max");' value=3 />
                 </td>
               </tr>
               <tr id="timestamp_field">
@@ -128,7 +129,7 @@
                   <label for="timestamp">Timestamp</label>
                 </td>
                 <td>
-                  <input id="timestamp" type="text" onchange='set_config("timestamp");' value=10 />
+                  <input id="timestamp" type="text" onchange='input_algorithm_config("timestamp");' value=10 />
                 </td>
               </tr>
             </tbody>

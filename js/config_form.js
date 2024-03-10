@@ -22,3 +22,19 @@ function set_config(param_name) {
     let function_name = "_app_config_" + param_name;
     window.module[function_name](value);
 }
+
+function set_algorithm() {
+    const algorithms_params = {
+        "larger-than-life": [],
+        "primordia":        ["timestamp_field"],
+        "lenia":            ["timestamp_field"],
+    };
+
+    let algorithm = document.getElementById("algorithm").value;
+    let params_to_show = algorithms_params[algorithm];
+    let params = ["timestamp_field"];
+    params.forEach((param) => {
+        document.getElementById(param).hidden = !params_to_show.includes(param);
+    });
+    set_config("algorithm");
+}

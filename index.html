@@ -73,7 +73,7 @@
                   <label for="algorithm">Algorithm</label>
                 </td>
                 <td>
-                  <select id="algorithm" onchange='set_config("algorithm");'>
+                  <select id="algorithm" onchange='set_algorithm();'>
                     <option value="larger-than-life">Larger than life</option>
                     <option value="primordia">Promordia</option>
                     <option value="lenia" selected>Lenia</option>
@@ -86,6 +86,14 @@
                 </td>
                 <td>
                   <input id="range" type="text" onchange='set_config("range");' value=15 />
+                </td>
+              </tr>
+              <tr id="timestamp_field">
+                <td>
+                  <label for="timestamp">Timestamp</label>
+                </td>
+                <td>
+                  <input id="timestamp" type="text" onchange='set_config("timestamp");' value=10 />
                 </td>
               </tr>
             </tbody>

@@ -13,15 +13,17 @@ public:
     Application(const Config& config);
     ~Application();
 
-    int Run(int framerate);
+    int Run();
 
-    void Restart();
+    void Restart(int framerate);
 
 private:
     void Update();
 
     Clock m_clock;
     Window m_window;
+    int m_computeFramerate;
+    float m_framesSinceLastCompute;
     LifeProcessor* m_lifeProcessor;
     ShaderProgram m_displayShader;
 

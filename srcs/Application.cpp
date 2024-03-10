@@ -101,5 +101,9 @@ extern "C"
     }
     void EMSCRIPTEN_KEEPALIVE app_config_range(int range) { g_config.range = range; }
     void EMSCRIPTEN_KEEPALIVE app_config_timestamp(int timestamp) { g_config.timestamp = timestamp; }
+    void EMSCRIPTEN_KEEPALIVE app_config_survival_range_min(float min) { g_config.survivalRangeMin = min; }
+    void EMSCRIPTEN_KEEPALIVE app_config_survival_range_max(float max) { g_config.survivalRangeMax = max; }
+    void EMSCRIPTEN_KEEPALIVE app_config_birth_range_min(float min) { g_config.birthRangeMin = min; }
+    void EMSCRIPTEN_KEEPALIVE app_config_birth_range_max(float max) { g_config.birthRangeMax = max; }
 }
 #endif // __EMSCRIPTEN__

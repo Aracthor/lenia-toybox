@@ -25,14 +25,14 @@ function set_config(param_name) {
 
 function set_algorithm() {
     const algorithms_params = {
-        "larger-than-life": [],
-        "primordia":        ["timestamp_field"],
+        "larger-than-life": ["survival_range_field", "birth_range_field"],
+        "primordia":        ["survival_range_field", "birth_range_field", "timestamp_field"],
         "lenia":            ["timestamp_field"],
     };
 
     let algorithm = document.getElementById("algorithm").value;
     let params_to_show = algorithms_params[algorithm];
-    let params = ["timestamp_field"];
+    let params = ["survival_range_field", "birth_range_field", "timestamp_field"];
     params.forEach((param) => {
         document.getElementById(param).hidden = !params_to_show.includes(param);
     });

@@ -132,6 +132,24 @@
                   <input id="timestamp" type="text" onchange='input_algorithm_config("timestamp");' value=10 />
                 </td>
               </tr>
+              <tr id="kernel_gauss_field">
+                <td>
+                  <label for="timestamp">Kernel Gauss</label>
+                </td>
+                <td>
+                  <input id="kernel_center" type="text" onchange='input_algorithm_config("kernel_center");' value=0.5 />
+                  <input id="kernel_width"  type="text" onchange='input_algorithm_config("kernel_width");'  value=0.15 />
+                </td>
+              </tr>
+              <tr id="growth_gauss_field">
+                <td>
+                  <label for="timestamp">Kernel Gauss</label>
+                </td>
+                <td>
+                  <input id="growth_center" type="text" onchange='input_algorithm_config("growth_center");' value=0.135 />
+                  <input id="growth_width"  type="text" onchange='input_algorithm_config("growth_width");'  value=0.014 />
+                </td>
+              </tr>
             </tbody>
           </table>
       </fieldset>

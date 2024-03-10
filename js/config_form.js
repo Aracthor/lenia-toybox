@@ -40,12 +40,12 @@ function set_algorithm() {
     const algorithms_params = {
         "larger-than-life": ["survival_range_field", "birth_range_field"],
         "primordia":        ["timestamp_field", "survival_range_field", "birth_range_field"],
-        "lenia":            ["timestamp_field"],
+        "lenia":            ["timestamp_field", "kernel_gauss_field", "growth_gauss_field"],
     };
 
     let algorithm = document.getElementById("algorithm").value;
     let params_to_show = algorithms_params[algorithm];
-    let params = ["survival_range_field", "birth_range_field", "timestamp_field"];
+    let params = ["timestamp_field", "survival_range_field", "birth_range_field", "kernel_gauss_field", "growth_gauss_field"];
     params.forEach((param) => {
         document.getElementById(param).hidden = !params_to_show.includes(param);
     });
@@ -106,6 +106,10 @@ function set_preset() {
             params: {
                 "range": 15,
                 "timestamp": 10,
+                "kernel_center": 0.5,
+                "kernel_width": 0.15,
+                "growth_center": 0.135,
+                "growth_width": 0.014,
             },
         },
     };

@@ -52,6 +52,7 @@ LD_WEBASM_FLAGS= -O3                             \
                                                  \
                  -s MODULARIZE=1                 \
                  -s EXPORT_ES6=1                 \
+                 -s ASSERTIONS                   \
                  -s EXPORTED_RUNTIME_METHODS="['stringToNewUTF8']"
 
 

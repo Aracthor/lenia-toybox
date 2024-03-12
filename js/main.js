@@ -19,7 +19,7 @@ const onGlobalPageLoad = async () => {
     window.addEventListener("error", onBasicGlobalPageError);
 
     const errorText = document.querySelector("#errorText");
-    const canvas = document.querySelector("#emscriptenCanvas");
+    const canvas = document.querySelector("#canvas");
 
     const showErrorText = (htmlText) => {
         canvas.style.display = "none"; // hide

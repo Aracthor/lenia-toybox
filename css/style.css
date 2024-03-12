@@ -12,7 +12,7 @@
 }
 
 /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
-#emscriptenCanvas {
+#canvas {
   width: 800px;
   height: 600px;
   display: none;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Clock.hpp"
 #include "Config.hpp"
 #include "FrameBuffer.hpp"
 #include "ShaderProgram.hpp"
@@ -20,6 +21,8 @@ private:
 
     const Config m_config;
 
+    Clock m_clock;
+    float m_elapsedTimeSinceLastUpdate;
     ShaderProgram m_computeShader;
     Texture m_textures[2];
     const Texture* m_inputTexture;

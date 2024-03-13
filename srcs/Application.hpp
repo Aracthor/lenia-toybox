@@ -22,8 +22,6 @@ private:
 
     Clock m_clock;
     Window m_window;
-    int m_computeFramerate;
-    float m_framesSinceLastCompute;
     LifeProcessor* m_lifeProcessor;
     ShaderProgram m_displayShader;
 

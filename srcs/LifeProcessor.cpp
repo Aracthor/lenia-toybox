@@ -26,6 +26,7 @@ const char* ComputeShaderProgram(Algorithm::Type type)
 
 LifeProcessor::LifeProcessor(const Config& config)
     : m_config(config)
+    , m_elapsedTimeSinceLastUpdate(0.f)
     , m_computeShader("shaders/display_texture.vert", ComputeShaderProgram(m_config.algorithm))
     , m_textures{
         Texture(m_config.width, m_config.height),
@@ -49,12 +50,20 @@ void LifeProcessor::Update()
 {
     if (m_processing)
     {
-        swap(m_inputTexture, m_outputTexture);
-        m_outputTexture->AttachToFrameBuffer(m_frameBuffer);
-        m_inputTexture->Bind();
-        ConfigureComputeProgram();
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-        m_frameBuffer.Unbind();
+        m_clock.Update();
+        m_elapsedTimeSinceLastUpdate += m_clock.GetElapsedTimeInUs();
+        const float frameTimeInUs = 1000000.f / m_config.framerate;
+        if (m_elapsedTimeSinceLastUpdate > frameTimeInUs)
+        {
+            swap(m_inputTexture, m_outputTexture);
+            m_outputTexture->AttachToFrameBuffer(m_frameBuffer);
+            m_inputTexture->Bind();
+            ConfigureComputeProgram();
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+            m_frameBuffer.Unbind();
+
+            m_elapsedTimeSinceLastUpdate -= frameTimeInUs;
+        }
     }
 }
 

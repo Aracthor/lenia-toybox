@@ -20,8 +20,6 @@ Config g_config;
 
 Application::Application(const Config& config)
     : m_window("Lenia Toybox", windowWidth, windowHeight)
-    , m_computeFramerate(config.framerate)
-    , m_framesSinceLastCompute(0.f)
     , m_lifeProcessor(new LifeProcessor(config))
     , m_displayShader("shaders/display_texture.vert", "shaders/display_texture.frag")
 {
@@ -65,8 +63,6 @@ int Application::Run()
 
 void Application::Restart(int framerate)
 {
-    m_computeFramerate = framerate;
-    m_framesSinceLastCompute = 0.f;
     delete m_lifeProcessor;
     m_lifeProcessor = new LifeProcessor(g_config);
 }
@@ -75,15 +71,7 @@ void Application::Update()
 {
     m_window.Clear();
 
-    {
-        m_framesSinceLastCompute += 1.f;
-        const float framesByComputeFrame = static_cast<float>(windowFramerate) / static_cast<float>(m_computeFramerate);
-        if (m_framesSinceLastCompute >= framesByComputeFrame)
-        {
-            m_framesSinceLastCompute -= framesByComputeFrame;
-            m_lifeProcessor->Update();
-        }
-    }
+    m_lifeProcessor->Update();
 
     m_displayShader.Use();
     m_displayShader.SetUniformVec2("uniResolution", windowWidth, windowHeight);

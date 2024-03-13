@@ -4,6 +4,15 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
+namespace
+{
+bool hasGlExtension(const char* extensionName)
+{
+    const std::string extensions(reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)));
+    return extensions.find(extensionName) != std::string::npos;
+}
+} // namespace
+
 Window::Window(const char* name, int width, int height)
     : m_width(width)
     , m_height(height)
@@ -30,6 +39,12 @@ Window::Window(const char* name, int width, int height)
     if (SDL_GL_MakeCurrent(m_window, m_context) < 0)
     {
         std::cerr << "Failed to make GL context current: " << SDL_GetError() << std::endl;
+        std::terminate();
+    }
+
+    if (!hasGlExtension("GL_EXT_color_buffer_float"))
+    {
+        std::cerr << "Your system doesn't support needed extension GL_EXT_color_buffer_float." << std::endl;
         std::terminate();
     }
 

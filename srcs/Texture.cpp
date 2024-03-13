@@ -46,8 +46,12 @@ void Texture::AttachToFrameBuffer(const FrameBuffer& frameBuffer) const
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textureID, 0);
     GLenum buffer = GL_COLOR_ATTACHMENT0;
     glDrawBuffers(1, &buffer);
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    const GLenum frameBufferStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    if (frameBufferStatus != GL_FRAMEBUFFER_COMPLETE)
+    {
+        std::cerr << "Error setting frame buffer: " << std::hex << frameBufferStatus << std::dec << std::endl;
         std::abort();
+    }
 }
 
 void Texture::FillWithRandom()

@@ -18,18 +18,7 @@ const onGlobalPageLoad = async () => {
     };
     window.addEventListener("error", onBasicGlobalPageError);
 
-    const errorText = document.querySelector("#errorText");
     const canvas = document.querySelector("#canvas");
-
-    const showErrorText = (htmlText) => {
-        canvas.style.display = "none"; // hide
-        errorText.innerHTML = htmlText;
-        errorText.style.display = "block"; // show
-    };
-    const showCanvas = () => {
-        errorText.style.display = "none"; // hide
-        canvas.style.display = "block"; // show
-    };
 
 
     const onContextCreationError = (event) => {
@@ -136,14 +125,10 @@ const onGlobalPageLoad = async () => {
         });
 
         log("wasm script: loading successful");
-
-        showCanvas();
     }
     catch (err) {
 
         log(`[ERROR] wasm script: loading failed, err=${err.message}`);
-
-        showErrorText("Fatal error<br>consult logging for more information.");
     }
 };
 

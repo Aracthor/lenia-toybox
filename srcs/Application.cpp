@@ -12,7 +12,7 @@ namespace
 {
 const int windowWidth = 800;
 const int windowHeight = 600;
-const int windowFramerate = 60;
+[[maybe_unused]] const int windowFramerate = 60;
 
 Application* g_app;
 Config g_config;
@@ -35,6 +35,9 @@ Application::~Application()
 int Application::Run()
 {
     auto mainLoop = [](void* data) {
+#ifdef __EMSCRIPTEN__
+        emscripten_set_main_loop_timing(EM_TIMING_RAF, 1);
+#endif
         Application* application = reinterpret_cast<Application*>(data);
         application->Update();
         application->m_window.PollEvents(application->m_running, application->m_lifeProcessor->Processing());
@@ -42,7 +45,6 @@ int Application::Run()
 
     m_running = true;
 #ifdef __EMSCRIPTEN__
-    emscripten_set_main_loop_timing(EM_TIMING_SETTIMEOUT, windowFramerate);
     emscripten_set_main_loop_arg(mainLoop, this, 0, true);
 #else
     while (m_running)

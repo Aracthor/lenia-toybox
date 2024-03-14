@@ -48,9 +48,9 @@ LifeProcessor::LifeProcessor(const Config& config)
 
 void LifeProcessor::Update()
 {
+    m_clock.Update();
     if (m_processing)
     {
-        m_clock.Update();
         m_elapsedTimeSinceLastUpdate += m_clock.GetElapsedTimeInUs();
         const float frameTimeInUs = 1000000.f / m_config.framerate;
         if (m_elapsedTimeSinceLastUpdate > frameTimeInUs)

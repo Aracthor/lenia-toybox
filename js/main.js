@@ -1,6 +1,7 @@
 "use strict"
 
 import Module from './bin/lenia-toybox.js'
+import Parameters from './parameters.js'
 
 const onGlobalPageLoad = async () => {
 
@@ -107,6 +108,8 @@ const onGlobalPageLoad = async () => {
         return;
     }
 
+    let parameters = new Parameters();
+
     const options = {
         print: (text) => { log(`${text}`); },
         printErr: (text) => { log(`[ERROR] ${text}`); },
@@ -114,7 +117,10 @@ const onGlobalPageLoad = async () => {
         locateFile: (path, prefix) => { return "js/bin/" + path; },
 
         canvas: canvas,
-        arguments: [],
+        arguments: [
+            "-w", parameters.get("width"),
+            "-h", parameters.get("height"),
+        ],
     };
 
     log("Loading main script...")

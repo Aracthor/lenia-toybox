@@ -1,5 +1,10 @@
+import Parameters from './parameters.js'
+
+let parameters = new Parameters();
+
 function restart() {
     window.module._app_restart();
+    parameters.save_in_url();
 }
 window.restart = restart;
 
@@ -26,6 +31,8 @@ function set_config(param_name) {
     }
     let function_name = "_app_config_" + param_name;
     window.module[function_name](value);
+
+    parameters.set(param_name, value);
 }
 
 function input_config(param_name) {

@@ -28,12 +28,12 @@ function set_config(param_name) {
 }
 
 function input_config(param_name) {
-    set_config(param_name)
+    set_config(param_name);
 }
 
 function input_algorithm_config(param_name) {
     set_custom_preset();
-    set_config(param_name)
+    set_config(param_name);
 }
 
 function set_algorithm() {
@@ -54,7 +54,7 @@ function set_algorithm() {
 
 function input_algorithm() {
     set_custom_preset();
-    set_algorithm()
+    set_algorithm();
 }
 
 function set_preset() {

@@ -1,12 +1,16 @@
 const defaultParameters = {
     "width": 800,
     "height": 600,
-}
+};
 
 const Parameters = class {
     constructor() {
         this.searchParams = new URLSearchParams(window.location.search)
         this.id = 0;
+    }
+
+    keys() {
+        return Object.keys(defaultParameters);
     }
 
     get(name) {

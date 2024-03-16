@@ -136,3 +136,11 @@ function set_preset() {
     }
 }
 window.set_preset = set_preset;
+
+const onConfigFormLoad = async () => {
+    let param_names = parameters.keys();
+    for (const param_name of param_names) {
+        document.getElementById(param_name).value = parameters.get(param_name);
+    }
+}
+window.addEventListener("load", onConfigFormLoad);

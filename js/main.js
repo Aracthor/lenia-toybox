@@ -110,6 +110,28 @@ const onGlobalPageLoad = async () => {
 
     let parameters = new Parameters();
 
+    let argv = [
+        "-w", parameters.get("width"),
+        "-h", parameters.get("height"),
+        "-f", parameters.get("framerate"),
+        "-s", parameters.get("startup"),
+
+        "-a", parameters.get("algorithm"),
+        "-r", parameters.get("range"),
+        "-t", parameters.get("timestamp"),
+        "--survival-min", parameters.get("survival_range_min"),
+        "--survival-max", parameters.get("survival_range_max"),
+        "--birth-min", parameters.get("birth_range_min"),
+        "--birth-max", parameters.get("birth_range_max"),
+        "--kernel-center", parameters.get("kernel_center"),
+        "--kernel-width", parameters.get("kernel_width"),
+        "--growth-center", parameters.get("growth_center"),
+        "--growth-width", parameters.get("growth_width"),
+    ];
+    if (parameters.get("pause") == "true") {
+        argv.push("-p");
+    }
+
     const options = {
         print: (text) => { log(`${text}`); },
         printErr: (text) => { log(`[ERROR] ${text}`); },
@@ -117,10 +139,7 @@ const onGlobalPageLoad = async () => {
         locateFile: (path, prefix) => { return "js/bin/" + path; },
 
         canvas: canvas,
-        arguments: [
-            "-w", parameters.get("width"),
-            "-h", parameters.get("height"),
-        ],
+        arguments: argv,
     };
 
     log("Loading main script...")

@@ -1,6 +1,21 @@
 const defaultParameters = {
     "width": 800,
     "height": 600,
+    "framerate": 60,
+    "startup": "",
+    "pause": false,
+
+    "algorithm": "lenia",
+    "range": 15,
+    "timestamp": 10,
+    "survival_range_min": 2,
+    "survival_range_max": 3,
+    "birth_range_min": 3,
+    "birth_range_max": 3,
+    "kernel_center": 0.5,
+    "kernel_width": 0.15,
+    "growth_center": 0.135,
+    "growth_width": 0.014,
 };
 
 const Parameters = class {
@@ -15,7 +30,7 @@ const Parameters = class {
 
     get(name) {
         let param = this.searchParams.get(name);
-        if (!param) {
+        if (param === null) {
             param = defaultParameters[name];
         }
         return param.toString();

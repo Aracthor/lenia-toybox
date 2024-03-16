@@ -26,13 +26,14 @@ function set_config(param_name) {
     };
 
     let value = get_input_value(param_name);
-    if (is_string(value)) {
-        value = window.module.stringToNewUTF8(value);
-    }
-    let function_name = "_app_config_" + param_name;
-    window.module[function_name](value);
-
     parameters.set(param_name, value);
+    if (window.module) {
+        if (is_string(value)) {
+            value = window.module.stringToNewUTF8(value);
+        }
+        let function_name = "_app_config_" + param_name;
+        window.module[function_name](value);
+    }
 }
 
 function input_config(param_name) {
@@ -139,8 +140,16 @@ window.set_preset = set_preset;
 
 const onConfigFormLoad = async () => {
     let param_names = parameters.keys();
+    if (param_names) {
+        set_custom_preset();
+    }
     for (const param_name of param_names) {
-        document.getElementById(param_name).value = parameters.get(param_name);
+        console.log(param_name);
+        let value = parameters.get(param_name);
+        document.getElementById(param_name).value = value;
+        if (param_name == "algorithm") {
+            set_algorithm(value)
+        }
     }
 }
 window.addEventListener("load", onConfigFormLoad);

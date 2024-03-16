@@ -1,6 +1,7 @@
 function restart() {
     window.module._app_restart();
 }
+window.restart = restart;
 
 function set_custom_preset() {
     document.getElementById("preset").value = "(custom)";
@@ -30,11 +31,13 @@ function set_config(param_name) {
 function input_config(param_name) {
     set_config(param_name);
 }
+window.input_config = input_config;
 
 function input_algorithm_config(param_name) {
     set_custom_preset();
     set_config(param_name);
 }
+window.input_algorithm_config = input_algorithm_config;
 
 function set_algorithm() {
     const algorithms_params = {
@@ -56,6 +59,7 @@ function input_algorithm() {
     set_custom_preset();
     set_algorithm();
 }
+window.input_algorithm = input_algorithm;
 
 function set_preset() {
     const preset_params = {
@@ -124,3 +128,4 @@ function set_preset() {
         set_config(param);
     }
 }
+window.set_preset = set_preset;

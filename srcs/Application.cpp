@@ -93,7 +93,7 @@ extern "C"
     void EMSCRIPTEN_KEEPALIVE app_config_framerate(int framerate) { g_config.framerate = framerate; }
     void EMSCRIPTEN_KEEPALIVE app_config_startup(char* startup)
     {
-        g_config.startupFileName = startup;
+        g_config.startupFileName = startup ? startup : "";
         free(static_cast<void*>(startup));
     }
     void EMSCRIPTEN_KEEPALIVE app_config_pause(bool pause) { g_config.pause = pause; }

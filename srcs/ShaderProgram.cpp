@@ -1,7 +1,7 @@
 #include "ShaderProgram.hpp"
 
 #include <fstream>
-#include <iostream>
+#include <sstream>
 
 namespace
 {
@@ -12,10 +12,7 @@ GLuint CompileShader(const char* parShaderFileName, GLenum parShaderType)
 
     ifs.open(parShaderFileName, std::ifstream::in | std::ifstream::binary);
     if (ifs.rdstate() & std::ios::failbit)
-    {
-        std::cerr << "Couldn't open file '" << parShaderFileName << "'." << std::endl;
-        std::terminate();
-    }
+        throw std::runtime_error(std::string("Couldn't open file '") + parShaderFileName + "'.");
 
     ifs.seekg(0, ifs.end);
     int fileSize = ifs.tellg();
@@ -29,6 +26,7 @@ GLuint CompileShader(const char* parShaderFileName, GLenum parShaderType)
     glShaderSource(shaderID, 1, &fileContent, NULL);
     glCompileShader(shaderID);
     glGetShaderiv(shaderID, GL_COMPILE_STATUS, &compiled);
+    delete[] fileContent;
     if (!compiled)
     {
         GLint infoLen = 0;
@@ -37,18 +35,15 @@ GLuint CompileShader(const char* parShaderFileName, GLenum parShaderType)
         {
             char* infoLog = new char[infoLen];
             glGetShaderInfoLog(shaderID, infoLen, NULL, infoLog);
-            std::cerr << "Error compiling shader '" << parShaderFileName << "':" << std::endl
-                      << infoLog << std::endl
-                      << fileContent << std::endl;
+            std::ostringstream oss;
+            oss << "Error compiling shader '" << parShaderFileName << "':" << std::endl
+                << infoLog << std::endl
+                << fileContent;
             delete[] infoLog;
+            throw std::runtime_error(oss.str());
         }
-        else
-        {
-            std::cerr << "Unkown error compiling shader '" << parShaderFileName << "':" << std::endl;
-        }
-        std::terminate();
+        throw std::runtime_error(std::string("Unkown error compiling shader '") + parShaderFileName + "':");
     }
-    delete[] fileContent;
 
     return shaderID;
 }
@@ -75,14 +70,12 @@ ShaderProgram::ShaderProgram(const char* parVertexShaderFileName, const char* pa
         {
             char* infoLog = new char[infoLen];
             glGetProgramInfoLog(m_programID, infoLen, NULL, infoLog);
-            std::cerr << "Error linking program:" << std::endl << infoLog << std::endl;
+            std::ostringstream oss;
+            oss << "Error linking program:" << std::endl << infoLog;
             delete[] infoLog;
+            throw std::runtime_error(oss.str());
         }
-        else
-        {
-            std::cerr << "Unkown error linking program." << std::endl;
-        }
-        std::terminate();
+        throw std::runtime_error("Unkown error linking program.");
     }
 }
 

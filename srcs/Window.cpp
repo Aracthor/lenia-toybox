@@ -2,7 +2,8 @@
 
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
-#include <iostream>
+#include <stdexcept>
+#include <string>
 
 namespace
 {
@@ -19,10 +20,8 @@ Window::Window(const char* name, int width, int height)
 {
     SDL_SetHint(SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT, "canvas");
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
-    {
-        std::cerr << "could not initialize sdl2: " << SDL_GetError() << std::endl;
-        std::terminate();
-    }
+        throw std::runtime_error(std::string("Could not initialize sdl2: ") + SDL_GetError());
+
     m_window = SDL_CreateWindow(name, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height,
                                 SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 
@@ -32,24 +31,16 @@ Window::Window(const char* name, int width, int height)
 
     m_context = SDL_GL_CreateContext(m_window);
     if (!m_context)
-    {
-        std::cerr << "Failed to create GL context: " << SDL_GetError() << std::endl;
-        std::terminate();
-    }
+        throw std::runtime_error(std::string("Failed to create GL context: ") + SDL_GetError());
+
     if (SDL_GL_MakeCurrent(m_window, m_context) < 0)
-    {
-        std::cerr << "Failed to make GL context current: " << SDL_GetError() << std::endl;
-        std::terminate();
-    }
+        throw std::runtime_error(std::string("Failed to make GL context current: ") + SDL_GetError());
 
     if (!hasGlExtension("GL_EXT_color_buffer_float"))
-    {
-        std::cerr << "Your system doesn't support needed extension GL_EXT_color_buffer_float." << std::endl;
-        std::terminate();
-    }
+        throw std::runtime_error("Your system doesn't support needed extension GL_EXT_color_buffer_float.");
 
     if (glewInit() != GLEW_OK)
-        std::cerr << "GLEW not initialized correctly" << std::endl;
+        throw std::runtime_error("GLEW not initialized correctly");
 }
 
 Window::~Window()

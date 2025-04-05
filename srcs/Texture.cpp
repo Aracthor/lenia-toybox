@@ -5,7 +5,7 @@
 #include <SDL2/SDL_surface.h>
 
 #include <cstdlib> // random
-#include <iostream>
+#include <sstream>
 #include <vector>
 
 Texture::Texture(int width, int height)
@@ -45,8 +45,9 @@ void Texture::AttachToFrameBuffer(const FrameBuffer& frameBuffer) const
     const GLenum frameBufferStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     if (frameBufferStatus != GL_FRAMEBUFFER_COMPLETE)
     {
-        std::cerr << "Error setting frame buffer: " << std::hex << frameBufferStatus << std::dec << std::endl;
-        std::abort();
+        std::ostringstream oss;
+        oss << "Error setting frame buffer: " << std::hex << frameBufferStatus << std::endl;
+        throw std::runtime_error(oss.str());
     }
 }
 
@@ -69,20 +70,14 @@ void Texture::FillWithTextureFile(const char* fileName)
 {
     SDL_Surface* surface = SDL_LoadBMP(fileName);
     if (surface == nullptr)
-    {
-        std::cerr << "Cannot load texture file '" << fileName << "': " << SDL_GetError() << std::endl;
-        std::abort();
-    }
+        throw std::runtime_error(std::string("Cannot load texture file '") + fileName + "': " + SDL_GetError());
 
     SDL_PixelFormat* pixelFormat = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA32);
     SDL_Surface* convertedSurface = SDL_ConvertSurface(surface, pixelFormat, 0);
     SDL_FreeSurface(surface);
     SDL_FreeFormat(pixelFormat);
     if (convertedSurface == nullptr)
-    {
-        std::cerr << "Error converting surface: " << SDL_GetError() << std::endl;
-        std::abort();
-    }
+        throw std::runtime_error(std::string("Error converting surface: ") + SDL_GetError());
     const unsigned char* fileBytes = reinterpret_cast<const unsigned char*>(convertedSurface->pixels);
 
     std::vector<float> values;

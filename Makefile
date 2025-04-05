@@ -36,23 +36,25 @@ CXX_FLAGS=  -Wall -Werror   \
 
 CXX_NATIVE_FLAGS=
 
-CXX_WEBASM_FLAGS=-s USE_SDL=2
+CXX_WEBASM_FLAGS=-s USE_SDL=2   \
+                 -fexceptions
 
 LD_NATIVE_FLAGS= -O3 -lSDL2 -lGL -lGLEW
 
-LD_WEBASM_FLAGS= -O3                             \
-                 -s WASM=1                       \
-                 -s USE_SDL=2                    \
-                 -s MIN_WEBGL_VERSION=2          \
-                 -s MAX_WEBGL_VERSION=2          \
-                 -s FULL_ES3=1                   \
-                                                 \
-                 --preload-files=shaders/        \
-                 --preload-files=startups/       \
-                                                 \
-                 -s MODULARIZE=1                 \
-                 -s EXPORT_ES6=1                 \
-                 -s ASSERTIONS                   \
+LD_WEBASM_FLAGS= -O3                            \
+                 -s WASM=1                      \
+                 -s USE_SDL=2                   \
+                 -s MIN_WEBGL_VERSION=2         \
+                 -s MAX_WEBGL_VERSION=2         \
+                 -s FULL_ES3=1                  \
+                                                \
+                 --preload-files=shaders/       \
+                 --preload-files=startups/      \
+                                                \
+                 -s MODULARIZE=1                \
+                 -s EXPORT_ES6=1                \
+                 -s ASSERTIONS                  \
+                 -fexceptions                   \
                  -s EXPORTED_RUNTIME_METHODS="['stringToNewUTF8']"
 
 

@@ -26,7 +26,6 @@ GLuint CompileShader(const char* parShaderFileName, GLenum parShaderType)
     glShaderSource(shaderID, 1, &fileContent, NULL);
     glCompileShader(shaderID);
     glGetShaderiv(shaderID, GL_COMPILE_STATUS, &compiled);
-    delete[] fileContent;
     if (!compiled)
     {
         GLint infoLen = 0;
@@ -40,8 +39,10 @@ GLuint CompileShader(const char* parShaderFileName, GLenum parShaderType)
                 << infoLog << std::endl
                 << fileContent;
             delete[] infoLog;
+            delete[] fileContent;
             throw std::runtime_error(oss.str());
         }
+        delete[] fileContent;
         throw std::runtime_error(std::string("Unkown error compiling shader '") + parShaderFileName + "':");
     }
 

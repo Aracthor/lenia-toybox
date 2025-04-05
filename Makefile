@@ -64,6 +64,7 @@ SRCS_FILES=     main.cpp          \
                 Config.cpp        \
                 FrameBuffer.cpp   \
                 LifeProcessor.cpp \
+                Profiler.cpp      \
                 ShaderProgram.cpp \
                 Texture.cpp       \
                 Window.cpp        \

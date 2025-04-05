@@ -55,12 +55,14 @@ void LifeProcessor::Update()
         const float frameTimeInUs = 1000000.f / m_config.framerate;
         if (m_elapsedTimeSinceLastUpdate > frameTimeInUs)
         {
+            m_profiler.StartProfile();
             swap(m_inputTexture, m_outputTexture);
             m_outputTexture->AttachToFrameBuffer(m_frameBuffer);
             m_inputTexture->Bind();
             ConfigureComputeProgram();
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
             m_frameBuffer.Unbind();
+            m_profiler.StopProfile();
 
             m_elapsedTimeSinceLastUpdate -= frameTimeInUs;
         }

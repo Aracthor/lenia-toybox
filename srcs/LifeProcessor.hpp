@@ -3,6 +3,7 @@
 #include "Clock.hpp"
 #include "Config.hpp"
 #include "FrameBuffer.hpp"
+#include "Profiler.hpp"
 #include "ShaderProgram.hpp"
 #include "Texture.hpp"
 
@@ -22,6 +23,7 @@ private:
     const Config m_config;
 
     Clock m_clock;
+    Profiler m_profiler;
     float m_elapsedTimeSinceLastUpdate;
     ShaderProgram m_computeShader;
     Texture m_textures[2];

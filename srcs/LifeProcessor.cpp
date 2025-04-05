@@ -27,7 +27,7 @@ const char* ComputeShaderProgram(Algorithm::Type type)
 LifeProcessor::LifeProcessor(const Config& config)
     : m_config(config)
     , m_elapsedTimeSinceLastUpdate(0.f)
-    , m_computeShader("shaders/display_texture.vert", ComputeShaderProgram(m_config.algorithm))
+    , m_computeShader("shaders/display_quad.vert", ComputeShaderProgram(m_config.algorithm))
     , m_textures{
         Texture(m_config.width, m_config.height),
         Texture(m_config.width, m_config.height),

@@ -21,7 +21,7 @@ Config g_config;
 Application::Application(const Config& config)
     : m_window("Lenia Toybox", windowWidth, windowHeight)
     , m_lifeProcessor(new LifeProcessor(config))
-    , m_displayShader("shaders/display_texture.vert", "shaders/display_texture.frag")
+    , m_displayShader("shaders/display_quad.vert", "shaders/display_texture.frag")
 {
     g_app = this;
     g_config = config;

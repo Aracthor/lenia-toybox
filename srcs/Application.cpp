@@ -34,7 +34,8 @@ Application::~Application()
 
 int Application::Run()
 {
-    auto mainLoop = [](void* data) {
+    auto mainLoop = [](void* data)
+    {
 #ifdef __EMSCRIPTEN__
         emscripten_set_main_loop_timing(EM_TIMING_RAF, 1);
 #endif
@@ -83,6 +84,7 @@ void Application::Update()
     m_window.Refresh();
 }
 
+// clang-format off
 #ifdef __EMSCRIPTEN__
 extern "C"
 {
@@ -115,3 +117,4 @@ extern "C"
     void EMSCRIPTEN_KEEPALIVE app_config_growth_width(float width) { g_config.growthGaussWidth = width; }
 }
 #endif // __EMSCRIPTEN__
+// clang-format on

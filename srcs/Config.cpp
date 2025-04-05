@@ -1,6 +1,7 @@
 #include "Config.hpp"
 
 #include <algorithm>
+#include <iostream>
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -177,8 +178,9 @@ private:
 class ConfigParameter
 {
 public:
-    ConfigParameter(const char* flag, IParameterProcessor* processor)
+    ConfigParameter(const char* flag, const char* name, IParameterProcessor* processor)
         : m_flag(flag)
+        , m_name(name)
         , m_processor(processor)
     {
     }
@@ -186,10 +188,21 @@ public:
     IParameterProcessor* Processor() { return m_processor.get(); }
     bool Matches(const std::string& arg) const { return m_flag == arg; }
 
+    void DisplayHelpLine() const { std::cout << m_flag << ": " << m_name << std::endl; }
+
 private:
     const std::string m_flag;
+    const char* m_name;
     std::unique_ptr<IParameterProcessor> m_processor;
 };
+
+void DisplayHelp(const char* exePath, const ConfigParameter* parameters, int parametersCount)
+{
+    std::cout << "Usage: " << exePath << " [parameters]" << std::endl;
+    std::cout << "Parameters list:" << std::endl;
+    for (int i = 0; i < parametersCount; i++)
+        parameters[i].DisplayHelpLine();
+}
 
 } // namespace
 
@@ -217,23 +230,23 @@ Config parse_command_line(int argc, char** argv)
     ArgIterator iterator(argc, argv);
     ConfigParameter parameters[] = {
         // clang-format off
-        {"-w", new IntegerProcessor(config.width)},
-        {"-h", new IntegerProcessor(config.height)},
-        {"-f", new IntegerProcessor(config.framerate)},
-        {"-s", new StringProcessor(config.startupFileName)},
-        {"-p", new BooleanProcessor(config.pause)},
+        {"-w", "canvas width", new IntegerProcessor(config.width)},
+        {"-h", "canvas height", new IntegerProcessor(config.height)},
+        {"-f", "framerate", new IntegerProcessor(config.framerate)},
+        {"-s", "startup filename", new StringProcessor(config.startupFileName)},
+        {"-p", "pause at start", new BooleanProcessor(config.pause)},
 
-        {"-a", new AlgorithmProcessor(config.algorithm)},
-        {"-t", new FloatProcessor(config.timestamp)},
-        {"-r", new IntegerProcessor(config.range)},
-        {"--survival-min", new FloatProcessor(config.survivalRangeMin)},
-        {"--survival-max", new FloatProcessor(config.survivalRangeMax)},
-        {"--birth-min", new FloatProcessor(config.birthRangeMin)},
-        {"--birth-max", new FloatProcessor(config.birthRangeMax)},
-        {"--kernel-center", new FloatProcessor(config.kernelGaussCenter)},
-        {"--kernel-width", new FloatProcessor(config.kernelGaussWidth)},
-        {"--growth-center", new FloatProcessor(config.growthGaussCenter)},
-        {"--growth-width", new FloatProcessor(config.growthGaussWidth)},
+        {"-a", "algorithm", new AlgorithmProcessor(config.algorithm)},
+        {"-t", "timestamp", new FloatProcessor(config.timestamp)},
+        {"-r", "kernel range", new IntegerProcessor(config.range)},
+        {"--survival-min", "min value for survival", new FloatProcessor(config.survivalRangeMin)},
+        {"--survival-max", "max value for survival", new FloatProcessor(config.survivalRangeMax)},
+        {"--birth-min", "min value for birth", new FloatProcessor(config.birthRangeMin)},
+        {"--birth-max", "max value for birth", new FloatProcessor(config.birthRangeMax)},
+        {"--kernel-center", "Kernel gauss center", new FloatProcessor(config.kernelGaussCenter)},
+        {"--kernel-width", "Kernel gauss width", new FloatProcessor(config.kernelGaussWidth)},
+        {"--growth-center", "Kernel growth center", new FloatProcessor(config.growthGaussCenter)},
+        {"--growth-width", "Kernel growth width", new FloatProcessor(config.growthGaussWidth)},
         // clang-format on
     };
 
@@ -241,11 +254,19 @@ Config parse_command_line(int argc, char** argv)
     {
         const std::string arg = *iterator;
         iterator++;
-        auto IsFlag = [arg](const ConfigParameter& parameter) { return parameter.Matches(arg); };
-        auto it = std::find_if(std::begin(parameters), std::end(parameters), IsFlag);
-        if (it == std::end(parameters))
-            throw std::invalid_argument(std::string("Unknown argument ") + arg);
-        it->Processor()->Process(iterator);
+        if (arg == "--help")
+        {
+            DisplayHelp(argv[0], parameters, std::size(parameters));
+            config.run = false;
+        }
+        else
+        {
+            auto IsFlag = [arg](const ConfigParameter& parameter) { return parameter.Matches(arg); };
+            auto it = std::find_if(std::begin(parameters), std::end(parameters), IsFlag);
+            if (it == std::end(parameters))
+                throw std::invalid_argument(std::string("Unknown argument ") + arg);
+            it->Processor()->Process(iterator);
+        }
     }
 
     return config;

@@ -16,6 +16,8 @@ Type FromName(const std::string& name);
 
 struct Config
 {
+    bool run = true;
+
     int width = 800;
     int height = 600;
     int framerate = 60;

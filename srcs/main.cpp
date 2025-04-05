@@ -12,6 +12,9 @@ int main(int argc, char** argv)
     {
         srandom(std::time(nullptr));
         const Config config = parse_command_line(argc, argv);
+        if (!config.run)
+            return 0;
+
         Application app(config);
         return app.Run();
     }

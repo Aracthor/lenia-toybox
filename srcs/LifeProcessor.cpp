@@ -4,13 +4,6 @@
 
 namespace
 {
-void swap(const Texture*& textureA, const Texture*& textureB)
-{
-    const Texture* tmp = textureA;
-    textureA = textureB;
-    textureB = tmp;
-}
-
 const char* ComputeShaderProgram(Algorithm::Type type)
 {
     switch (type)
@@ -64,7 +57,7 @@ void LifeProcessor::Update()
         {
             if (m_profiler)
                 m_profiler->StartProfile();
-            swap(m_inputTexture, m_outputTexture);
+            std::swap(m_inputTexture, m_outputTexture);
             m_outputTexture->AttachToFrameBuffer(m_frameBuffer);
             m_inputTexture->Bind();
             ConfigureComputeProgram();

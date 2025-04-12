@@ -69,8 +69,6 @@ void Application::Restart(int framerate)
 
 void Application::Update()
 {
-    m_window.Clear();
-
     m_lifeProcessor->Update();
 
     m_displayShader.Use();

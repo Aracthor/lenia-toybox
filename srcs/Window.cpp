@@ -49,12 +49,6 @@ Window::~Window()
     SDL_Quit();
 }
 
-void Window::Clear()
-{
-    glClearColor(0.f, 0.f, 0.f, 1.f);
-    glClear(GL_COLOR_BUFFER_BIT);
-}
-
 void Window::Refresh()
 {
     SDL_GL_SwapWindow(m_window);

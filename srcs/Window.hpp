@@ -10,7 +10,6 @@ public:
     Window(const char* name, int width, int height);
     ~Window();
 
-    void Clear();
     void Refresh();
     void PollEvents(bool& running, bool& processing);
 

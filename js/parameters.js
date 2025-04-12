@@ -1,6 +1,6 @@
 const defaultParameters = {
-    "width": 800,
-    "height": 600,
+    "width": 200,
+    "height": 150,
     "framerate": 60,
     "startup": "",
     "pause": false,

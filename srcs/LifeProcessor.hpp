@@ -1,16 +1,20 @@
 #pragma once
 
+#include <memory>
+
 #include "Clock.hpp"
 #include "Config.hpp"
 #include "FrameBuffer.hpp"
-#include "Profiler.hpp"
 #include "ShaderProgram.hpp"
 #include "Texture.hpp"
+
+class Profiler;
 
 class LifeProcessor
 {
 public:
     LifeProcessor(const Config& config);
+    ~LifeProcessor();
 
     void Update();
 
@@ -23,7 +27,7 @@ private:
     const Config m_config;
 
     Clock m_clock;
-    Profiler m_profiler;
+    std::unique_ptr<Profiler> m_profiler;
     float m_elapsedTimeSinceLastUpdate;
     ShaderProgram m_computeShader;
     Texture m_textures[2];

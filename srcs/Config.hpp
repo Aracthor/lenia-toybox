@@ -23,6 +23,7 @@ struct Config
     int framerate = 60;
     std::string startupFileName;
     bool pause = false;
+    bool profile = false;
 
     Algorithm::Type algorithm = Algorithm::Lenia;
     int range = 15;

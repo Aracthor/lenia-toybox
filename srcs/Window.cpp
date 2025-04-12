@@ -74,3 +74,8 @@ void Window::PollEvents(bool& running, bool& processing)
             processing = !processing;
     }
 }
+
+bool Window::CanProfile() const
+{
+    return hasGlExtension("GL_EXT_disjoint_timer_query");
+}

@@ -14,6 +14,8 @@ public:
     void Refresh();
     void PollEvents(bool& running, bool& processing);
 
+    bool CanProfile() const;
+
 private:
     int m_width;
     int m_height;

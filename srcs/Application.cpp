@@ -20,11 +20,12 @@ Config g_config;
 
 Application::Application(const Config& config)
     : m_window("Lenia Toybox", windowWidth, windowHeight)
-    , m_lifeProcessor(new LifeProcessor(config))
     , m_displayShader("shaders/display_quad.vert", "shaders/display_texture.frag")
 {
     g_app = this;
     g_config = config;
+    g_config.profile = m_window.CanProfile();
+    m_lifeProcessor.reset(new LifeProcessor(g_config));
 }
 
 Application::~Application() = default;

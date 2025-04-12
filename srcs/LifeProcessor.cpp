@@ -61,6 +61,7 @@ void LifeProcessor::Update()
             m_outputTexture->AttachToFrameBuffer(m_frameBuffer);
             m_inputTexture->Bind();
             ConfigureComputeProgram();
+            glViewport(0, 0, m_config.width, m_config.height);
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
             m_frameBuffer.Unbind();
             if (m_profiler)

@@ -15,8 +15,6 @@ bool hasGlExtension(const char* extensionName)
 } // namespace
 
 Window::Window(const char* name, int width, int height)
-    : m_width(width)
-    , m_height(height)
 {
     SDL_SetHint(SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT, "canvas");
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -53,7 +51,6 @@ Window::~Window()
 
 void Window::Clear()
 {
-    glViewport(0, 0, m_width, m_height);
     glClearColor(0.f, 0.f, 0.f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT);
 }

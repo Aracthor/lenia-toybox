@@ -76,6 +76,7 @@ void Application::Update()
     m_displayShader.Use();
     m_displayShader.SetUniformVec2("uniResolution", windowWidth, windowHeight);
     m_lifeProcessor->OutputTexture()->Bind();
+    glViewport(0, 0, windowWidth, windowHeight);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
     m_window.Refresh();

@@ -17,8 +17,6 @@ public:
     bool CanProfile() const;
 
 private:
-    int m_width;
-    int m_height;
     SDL_Window* m_window;
     SDL_GLContext m_context;
 };

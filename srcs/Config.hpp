@@ -28,10 +28,14 @@ struct Config
     Algorithm::Type algorithm = Algorithm::Lenia;
     int range = 15;
     float timestamp = 10.f;
+
+    // larger-than-life and primordia
     float survivalRangeMin = 2.f;
     float survivalRangeMax = 3.f;
     float birthRangeMin = 3.f;
     float birthRangeMax = 3.f;
+
+    // lenia
     float kernelGaussCenter = 0.5f;
     float kernelGaussWidth = 0.15f;
     float growthGaussCenter = 0.135f;

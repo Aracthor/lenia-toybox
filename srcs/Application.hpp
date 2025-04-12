@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "Clock.hpp"
 #include "ShaderProgram.hpp"
 #include "Window.hpp"
@@ -22,7 +24,7 @@ private:
 
     Clock m_clock;
     Window m_window;
-    LifeProcessor* m_lifeProcessor;
+    std::unique_ptr<LifeProcessor> m_lifeProcessor;
     ShaderProgram m_displayShader;
 
     bool m_running = false;

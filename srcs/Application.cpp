@@ -27,10 +27,7 @@ Application::Application(const Config& config)
     g_config = config;
 }
 
-Application::~Application()
-{
-    delete m_lifeProcessor;
-}
+Application::~Application() = default;
 
 int Application::Run()
 {
@@ -66,8 +63,7 @@ int Application::Run()
 
 void Application::Restart(int framerate)
 {
-    delete m_lifeProcessor;
-    m_lifeProcessor = new LifeProcessor(g_config);
+    m_lifeProcessor.reset(new LifeProcessor(g_config));
 }
 
 void Application::Update()

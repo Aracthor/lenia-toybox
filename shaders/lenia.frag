@@ -26,9 +26,6 @@ float bell(float x, float m, float s)
 
 float pixel_weight(float distance)
 {
-    if (distance >= 1.0)
-        return 0.0;
-
     float bDistance = distance * float(uniRingCount);
     int ringIndex = int(bDistance);
     float ringDistance = mod(bDistance, 1.0);
@@ -48,9 +45,12 @@ float average_neighbours_value(vec2 uv)
             vec2 neightbour_uv = uv + vec2(x, y) / uniResolution;
             float value = texture(input_texture, neightbour_uv).r;
             float distance = sqrt(float(x * x + y * y)) / float(uniRange);
-            float weight = pixel_weight(distance);
-            sum += value * weight;
-            total_weight += weight;
+            if (distance < 1.0)
+            {
+                float weight = pixel_weight(distance);
+                sum += value * weight;
+                total_weight += weight;
+            }
         }
     }
     return sum / total_weight;

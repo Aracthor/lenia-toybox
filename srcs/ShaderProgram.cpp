@@ -35,9 +35,7 @@ GLuint CompileShader(const char* parShaderFileName, GLenum parShaderType)
             char* infoLog = new char[infoLen];
             glGetShaderInfoLog(shaderID, infoLen, NULL, infoLog);
             std::ostringstream oss;
-            oss << "Error compiling shader '" << parShaderFileName << "':" << std::endl
-                << infoLog << std::endl
-                << fileContent;
+            oss << "Error compiling shader '" << parShaderFileName << "':" << std::endl << infoLog << std::endl;
             delete[] infoLog;
             delete[] fileContent;
             throw std::runtime_error(oss.str());

@@ -45,7 +45,8 @@ struct Config
         float growthGaussWidth = 0.014f;
         std::vector<float> ringWeights = {1.f};
     };
-    Kernel kernel;
+    int kernelCount = 1;
+    Kernel kernels[3];
 };
 
 Config parse_command_line(int argc, char** argv);

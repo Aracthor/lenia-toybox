@@ -254,7 +254,6 @@ Config parse_command_line(int argc, char** argv)
 
     ArgIterator iterator(argc, argv);
     ConfigParameter parameters[] = {
-        // clang-format off
         {"-w", "canvas width", new IntegerProcessor(config.width)},
         {"-h", "canvas height", new IntegerProcessor(config.height)},
         {"-f", "framerate", new IntegerProcessor(config.framerate)},
@@ -270,12 +269,22 @@ Config parse_command_line(int argc, char** argv)
         {"--birth-max", "max value for birth", new FloatProcessor(config.birthRangeMax)},
         {"--kernel-center", "Kernel gauss center", new FloatProcessor(config.kernelGaussCenter)},
         {"--kernel-width", "Kernel gauss width", new FloatProcessor(config.kernelGaussWidth)},
-        {"--growth-center", "Kernel growth center", new FloatProcessor(config.kernel.growthGaussCenter)},
-        {"--growth-width", "Kernel growth width", new FloatProcessor(config.kernel.growthGaussWidth)},
-        {"--ring-weight-1", "First Ring weight", new FloatInListProcessor(config.kernel.ringWeights, 0)},
-        {"--ring-weight-2", "Second Ring weight", new FloatInListProcessor(config.kernel.ringWeights, 1)},
-        {"--ring-weight-3", "Third Ring weight", new FloatInListProcessor(config.kernel.ringWeights, 2)},
-        // clang-format on
+        {"--kernel-count", "Kernel count", new IntegerProcessor(config.kernelCount)},
+        {"--growth-center-1", "Kernel growth center", new FloatProcessor(config.kernels[0].growthGaussCenter)},
+        {"--growth-center-2", "Kernel growth center", new FloatProcessor(config.kernels[1].growthGaussCenter)},
+        {"--growth-center-3", "Kernel growth center", new FloatProcessor(config.kernels[2].growthGaussCenter)},
+        {"--growth-width-1", "Kernel growth width", new FloatProcessor(config.kernels[0].growthGaussWidth)},
+        {"--growth-width-2", "Kernel growth width", new FloatProcessor(config.kernels[1].growthGaussWidth)},
+        {"--growth-width-3", "Kernel growth width", new FloatProcessor(config.kernels[2].growthGaussWidth)},
+        {"--ring-weight-1-1", "First Ring weight", new FloatInListProcessor(config.kernels[0].ringWeights, 0)},
+        {"--ring-weight-1-2", "Second Ring weight", new FloatInListProcessor(config.kernels[0].ringWeights, 1)},
+        {"--ring-weight-1-3", "Third Ring weight", new FloatInListProcessor(config.kernels[0].ringWeights, 2)},
+        {"--ring-weight-2-1", "First Ring weight", new FloatInListProcessor(config.kernels[1].ringWeights, 0)},
+        {"--ring-weight-2-2", "Second Ring weight", new FloatInListProcessor(config.kernels[1].ringWeights, 1)},
+        {"--ring-weight-2-3", "Third Ring weight", new FloatInListProcessor(config.kernels[1].ringWeights, 2)},
+        {"--ring-weight-3-1", "First Ring weight", new FloatInListProcessor(config.kernels[2].ringWeights, 0)},
+        {"--ring-weight-3-2", "Second Ring weight", new FloatInListProcessor(config.kernels[2].ringWeights, 1)},
+        {"--ring-weight-3-3", "Third Ring weight", new FloatInListProcessor(config.kernels[2].ringWeights, 2)},
     };
 
     while (iterator)

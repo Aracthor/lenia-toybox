@@ -125,8 +125,8 @@ const onGlobalPageLoad = async () => {
         "--birth-max", parameters.get("birth_range_max"),
         "--kernel-center", parameters.get("kernel_center"),
         "--kernel-width", parameters.get("kernel_width"),
-        "--growth-center", parameters.get("growth_center"),
-        "--growth-width", parameters.get("growth_width"),
+        "--growth-center-1", parameters.get("growth_center"),
+        "--growth-width-1", parameters.get("growth_width"),
     ];
     if (parameters.get("pause") == "true") {
         argv.push("-p");

@@ -1,6 +1,8 @@
 #include "LifeProcessor.hpp"
 
-#include <sstream>
+#include <cstdarg>
+#include <cstdio>
+#include <stdexcept>
 
 #include "Profiler.hpp"
 
@@ -18,6 +20,19 @@ const char* ComputeShaderProgram(Algorithm::Type type)
         return "shaders/lenia.frag";
     }
     return nullptr;
+}
+
+std::string stringprintf(const char* format, ...)
+{
+    char buffer[0x100];
+    constexpr size_t bufferSize = std::size(buffer);
+    va_list ap;
+    va_start(ap, format);
+    const size_t size = vsnprintf(buffer, std::size(buffer), format, ap);
+    if (size >= bufferSize)
+        throw std::runtime_error(std::string("String doesn't fit in buffer: ") + format);
+    va_end(ap);
+    return buffer;
 }
 } // namespace
 
@@ -94,14 +109,20 @@ void LifeProcessor::ConfigureComputeProgram() const
         m_computeShader.SetUniformFloat("uniDelaTime", 1.f / m_config.timestamp);
         m_computeShader.SetUniformFloat("uniKernelGaussCenter", m_config.kernelGaussCenter);
         m_computeShader.SetUniformFloat("uniKernelGaussWidth", m_config.kernelGaussWidth);
-        m_computeShader.SetUniformFloat("uniKernel.growthGaussCenter", m_config.kernel.growthGaussCenter);
-        m_computeShader.SetUniformFloat("uniKernel.growthGaussWidth", m_config.kernel.growthGaussWidth);
-        m_computeShader.SetUniformInt("uniKernel.ringCount", m_config.kernel.ringWeights.size());
-        for (int i = 0; i < (int)m_config.kernel.ringWeights.size(); i++)
+        m_computeShader.SetUniformInt("uniKernelCount", m_config.kernelCount);
+        for (int k = 0; k < m_config.kernelCount; k++)
         {
-            std::ostringstream uniformNameOss;
-            uniformNameOss << "uniKernel.ringWeights[" << i << "]";
-            m_computeShader.SetUniformFloat(uniformNameOss.str().c_str(), m_config.kernel.ringWeights[i]);
+            m_computeShader.SetUniformFloat(stringprintf("uniKernels[%d].growthGaussCenter", k).c_str(),
+                                            m_config.kernels[k].growthGaussCenter);
+            m_computeShader.SetUniformFloat(stringprintf("uniKernels[%d].growthGaussWidth", k).c_str(),
+                                            m_config.kernels[k].growthGaussWidth);
+            m_computeShader.SetUniformInt(stringprintf("uniKernels[%d].ringCount", k).c_str(),
+                                          m_config.kernels[k].ringWeights.size());
+            for (int r = 0; r < (int)m_config.kernels[k].ringWeights.size(); r++)
+            {
+                m_computeShader.SetUniformFloat(stringprintf("uniKernels[%d].ringWeights[%d]", k, r).c_str(),
+                                                m_config.kernels[k].ringWeights[r]);
+            }
         }
         break;
     }

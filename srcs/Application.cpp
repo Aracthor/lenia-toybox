@@ -109,8 +109,8 @@ extern "C"
     void EMSCRIPTEN_KEEPALIVE app_config_birth_range_max(float max) { g_config.birthRangeMax = max; }
     void EMSCRIPTEN_KEEPALIVE app_config_kernel_center(float center) { g_config.kernelGaussCenter = center; }
     void EMSCRIPTEN_KEEPALIVE app_config_kernel_width(float width) { g_config.kernelGaussWidth = width; }
-    void EMSCRIPTEN_KEEPALIVE app_config_growth_center(float center) { g_config.growthGaussCenter = center; }
-    void EMSCRIPTEN_KEEPALIVE app_config_growth_width(float width) { g_config.growthGaussWidth = width; }
+    void EMSCRIPTEN_KEEPALIVE app_config_growth_center(float center) { g_config.kernels[0].growthGaussCenter = center; }
+    void EMSCRIPTEN_KEEPALIVE app_config_growth_width(float width) { g_config.kernels[0].growthGaussWidth = width; }
 }
 #endif // __EMSCRIPTEN__
 // clang-format on

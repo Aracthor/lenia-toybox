@@ -137,11 +137,11 @@ private:
     float& m_data;
 };
 
-class FloatInListProcessor : public IParameterProcessor
+class KernelRingProcessor : public IParameterProcessor
 {
 public:
-    FloatInListProcessor(std::vector<float>& data, size_t index)
-        : m_data(data)
+    KernelRingProcessor(Config::Kernel& kernel, size_t index)
+        : m_kernel(kernel)
         , m_index(index)
     {
     }
@@ -152,13 +152,11 @@ public:
         argIterator++;
         if (!isDecimalNumber(nextArg))
             throw std::invalid_argument(std::string("Expected decimal number, but got: ") + nextArg);
-        if (m_data.size() <= m_index)
-            m_data.resize(m_index + 1, 0.f);
-        m_data[m_index] = std::atof(nextArg);
+        m_kernel.SetWeight(m_index, std::atof(nextArg));
     }
 
 private:
-    std::vector<float>& m_data;
+    Config::Kernel& m_kernel;
     const size_t m_index;
 };
 
@@ -248,6 +246,19 @@ Type FromName(const std::string& name)
 }
 } // namespace Algorithm
 
+void Config::Kernel::SetWeight(size_t index, float weight)
+{
+    if (ringWeights.size() <= index)
+        ringWeights.resize(index + 1, 0.f);
+    ringWeights[index] = weight;
+}
+
+void Config::Kernel::RemoveRing(size_t index)
+{
+    if (ringWeights.size() >= index)
+        ringWeights.resize(index - 1);
+}
+
 Config parse_command_line(int argc, char** argv)
 {
     Config config;
@@ -276,15 +287,15 @@ Config parse_command_line(int argc, char** argv)
         {"--growth-width-1", "Kernel growth width", new FloatProcessor(config.kernels[0].growthGaussWidth)},
         {"--growth-width-2", "Kernel growth width", new FloatProcessor(config.kernels[1].growthGaussWidth)},
         {"--growth-width-3", "Kernel growth width", new FloatProcessor(config.kernels[2].growthGaussWidth)},
-        {"--ring-weight-1-1", "First Ring weight", new FloatInListProcessor(config.kernels[0].ringWeights, 0)},
-        {"--ring-weight-1-2", "Second Ring weight", new FloatInListProcessor(config.kernels[0].ringWeights, 1)},
-        {"--ring-weight-1-3", "Third Ring weight", new FloatInListProcessor(config.kernels[0].ringWeights, 2)},
-        {"--ring-weight-2-1", "First Ring weight", new FloatInListProcessor(config.kernels[1].ringWeights, 0)},
-        {"--ring-weight-2-2", "Second Ring weight", new FloatInListProcessor(config.kernels[1].ringWeights, 1)},
-        {"--ring-weight-2-3", "Third Ring weight", new FloatInListProcessor(config.kernels[1].ringWeights, 2)},
-        {"--ring-weight-3-1", "First Ring weight", new FloatInListProcessor(config.kernels[2].ringWeights, 0)},
-        {"--ring-weight-3-2", "Second Ring weight", new FloatInListProcessor(config.kernels[2].ringWeights, 1)},
-        {"--ring-weight-3-3", "Third Ring weight", new FloatInListProcessor(config.kernels[2].ringWeights, 2)},
+        {"--ring-weight-1-1", "First Ring weight", new KernelRingProcessor(config.kernels[0], 0)},
+        {"--ring-weight-1-2", "Second Ring weight", new KernelRingProcessor(config.kernels[0], 1)},
+        {"--ring-weight-1-3", "Third Ring weight", new KernelRingProcessor(config.kernels[0], 2)},
+        {"--ring-weight-2-1", "First Ring weight", new KernelRingProcessor(config.kernels[1], 0)},
+        {"--ring-weight-2-2", "Second Ring weight", new KernelRingProcessor(config.kernels[1], 1)},
+        {"--ring-weight-2-3", "Third Ring weight", new KernelRingProcessor(config.kernels[1], 2)},
+        {"--ring-weight-3-1", "First Ring weight", new KernelRingProcessor(config.kernels[2], 0)},
+        {"--ring-weight-3-2", "Second Ring weight", new KernelRingProcessor(config.kernels[2], 1)},
+        {"--ring-weight-3-3", "Third Ring weight", new KernelRingProcessor(config.kernels[2], 2)},
     };
 
     while (iterator)

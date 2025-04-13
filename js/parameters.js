@@ -14,8 +14,11 @@ const defaultParameters = {
     "birth_range_max": 3,
     "kernel_center": 0.5,
     "kernel_width": 0.15,
-    "growth_center": 0.135,
-    "growth_width": 0.014,
+    "kernel_1_growth_center": 0.135,
+    "kernel_1_growth_width": 0.014,
+    "kernel_1_ring_1_weight": 1.0,
+    "kernel_1_ring_2_weight": 1.0,
+    "kernel_1_ring_3_weight": 1.0,
 };
 
 const Parameters = class {

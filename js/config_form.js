@@ -47,16 +47,45 @@ function input_algorithm_config(param_name) {
 }
 window.input_algorithm_config = input_algorithm_config;
 
+function input_kernel_ring_enabled(kernel_index, ring_index) {
+    let enabled_element_name = "kernel_" + kernel_index + "_ring_" + ring_index + "_enabled";
+    let weight_element_name = "kernel_" + kernel_index + "_ring_" + ring_index + "_weight";
+    let enabled = document.getElementById(enabled_element_name).checked;
+    document.getElementById(weight_element_name).disabled = !enabled;
+    if (!enabled)
+    {
+        if (ring_index == 2)
+        {
+            let next_kernel_element_id = "kernel_" + kernel_index + "_ring_" + (ring_index + 1) + "_enabled";
+            document.getElementById(next_kernel_element_id).checked = false;
+            input_kernel_ring_enabled(kernel_index, ring_index + 1);
+        }
+        let function_name = "_app_config_kernel_" + kernel_index + "_remove_ring";
+        window.module[function_name](ring_index);
+    }
+    else
+    {
+        if (ring_index == 3)
+        {
+            let next_kernel_element_id = "kernel_" + kernel_index + "_ring_" + (ring_index - 1) + "_enabled";
+            document.getElementById(next_kernel_element_id).checked = true;
+            input_kernel_ring_enabled(kernel_index, ring_index - 1);
+        }
+        input_config(weight_element_name);
+    }
+}
+window.input_kernel_ring_enabled = input_kernel_ring_enabled;
+
 function set_algorithm() {
     const algorithms_params = {
         "larger-than-life": ["survival_range_field", "birth_range_field"],
         "primordia":        ["timestamp_field", "survival_range_field", "birth_range_field"],
-        "lenia":            ["timestamp_field", "kernel_gauss_field", "growth_gauss_field"],
+        "lenia":            ["timestamp_field", "kernel_gauss_field", "kernels_config"],
     };
 
     let algorithm = document.getElementById("algorithm").value;
     let params_to_show = algorithms_params[algorithm];
-    let params = ["timestamp_field", "survival_range_field", "birth_range_field", "kernel_gauss_field", "growth_gauss_field"];
+    let params = ["timestamp_field", "survival_range_field", "birth_range_field", "kernel_gauss_field", "kernels_config"];
     params.forEach((param) => {
         document.getElementById(param).hidden = !params_to_show.includes(param);
     });
@@ -120,8 +149,23 @@ function set_preset() {
                 "timestamp": 10,
                 "kernel_center": 0.5,
                 "kernel_width": 0.15,
-                "growth_center": 0.135,
-                "growth_width": 0.014,
+                "kernel_1_growth_center": 0.135,
+                "kernel_1_growth_width": 0.014,
+                "kernel_1_ring_1_weight": 1.0,
+            },
+        },
+        "hydrogeminium": {
+            algorithm: "lenia",
+            params: {
+                "range": 18,
+                "timestamp": 10,
+                "kernel_center": 0.5,
+                "kernel_width": 0.15,
+                "kernel_1_growth_center": 0.26,
+                "kernel_1_growth_width": 0.036,
+                "kernel_1_ring_1_weight": 0.5,
+                "kernel_1_ring_2_weight": 1.0,
+                "kernel_1_ring_3_weight": 0.667,
             },
         },
     };
@@ -144,9 +188,9 @@ const onConfigFormLoad = async () => {
         set_custom_preset();
     }
     for (const param_name of param_names) {
-        console.log(param_name);
         let value = parameters.get(param_name);
         document.getElementById(param_name).value = value;
+        document.getElementById(param_name).checked = Boolean(value);
         if (param_name == "algorithm") {
             set_algorithm(value)
         }

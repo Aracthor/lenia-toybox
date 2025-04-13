@@ -56,6 +56,7 @@
                   <select id="startup" onchange='input_config("startup");'>
                     <option value="" selected>(Random)</option>
                     <option value="startups/orbium.bmp">Orbium</option>
+                    <option value="startups/hydrogeminium.bmp">Hydrogeminium</option>
                   </select>
                 </td>
               </tr>
@@ -80,6 +81,7 @@
             <option value="primordia">Primordia</option>
             <option value="primordia-proto-lenia">Primordia Proto-Lenia</option>
             <option value="lenia" selected>Lenia</option>
+            <option value="hydrogeminium">Hydrogeminium</option>
             <option value="(custom)" hidden>(Custom)</option>)
           </select>
           <hr />
@@ -140,19 +142,52 @@
                   <input id="kernel_width"  type="text" onchange='input_algorithm_config("kernel_width");' />
                 </td>
               </tr>
-              <tr id="growth_gauss_field">
-                <td>
-                  Growth Gauss
-                </td>
-                <td>
-                  <input id="growth_center" type="text" onchange='input_algorithm_config("growth_center");' />
-                  <input id="growth_width"  type="text" onchange='input_algorithm_config("growth_width");' />
-                </td>
-              </tr>
             </tbody>
           </table>
-      </fieldset>
-    </div>
+          <div id="kernels_config">
+            <fieldset>
+              <legend>Kernel 1</legend>
+              <table>
+                <tr>
+                  <td>
+                    Growth Gauss
+                  </td>
+                  <td>
+                    <input id="kernel_1_growth_center" type="text" onchange='input_algorithm_config("kernel_1_growth_center");' />
+                    <input id="kernel_1_growth_width"  type="text" onchange='input_algorithm_config("kernel_1_growth_width");' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Ring 1 Weight
+                  </td>
+                  <td>
+                    <input id="kernel_1_ring_1_weight" type="text" onchange='input_algorithm_config("kernel_1_ring_1_weight");' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Ring 2 Weight
+                  </td>
+                  <td>
+                    <input id="kernel_1_ring_2_weight" type="text" onchange='input_algorithm_config("kernel_1_ring_2_weight");' disabled />
+                    <input id="kernel_1_ring_2_enabled" type="checkbox" onchange='input_kernel_ring_enabled(1, 2);' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Ring 3 Weight
+                  </td>
+                  <td>
+                    <input id="kernel_1_ring_3_weight" type="text" onchange='input_algorithm_config("kernel_1_ring_3_weight");' disabled />
+                    <input id="kernel_1_ring_3_enabled" type="checkbox" onchange='input_kernel_ring_enabled(1, 3);' />
+                  </td>
+                </tr>
+              </table>
+            </fieldset>
+          </div>
+        </fieldset>
+      </div>
 
     <textarea id="loggerOutput" rows="10" readonly></textarea>
 

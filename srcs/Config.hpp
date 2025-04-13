@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 namespace Algorithm
 {
@@ -40,6 +41,7 @@ struct Config
     float kernelGaussWidth = 0.15f;
     float growthGaussCenter = 0.135f;
     float growthGaussWidth = 0.014f;
+    std::vector<float> ringWeights = {1.f};
 };
 
 Config parse_command_line(int argc, char** argv);

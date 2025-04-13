@@ -137,6 +137,31 @@ private:
     float& m_data;
 };
 
+class FloatInListProcessor : public IParameterProcessor
+{
+public:
+    FloatInListProcessor(std::vector<float>& data, size_t index)
+        : m_data(data)
+        , m_index(index)
+    {
+    }
+
+    void Process(ArgIterator& argIterator) override
+    {
+        const char* nextArg = *argIterator;
+        argIterator++;
+        if (!isDecimalNumber(nextArg))
+            throw std::invalid_argument(std::string("Expected decimal number, but got: ") + nextArg);
+        if (m_data.size() <= m_index)
+            m_data.resize(m_index + 1, 0.f);
+        m_data[m_index] = std::atof(nextArg);
+    }
+
+private:
+    std::vector<float>& m_data;
+    const size_t m_index;
+};
+
 class StringProcessor : public IParameterProcessor
 {
 public:
@@ -247,6 +272,9 @@ Config parse_command_line(int argc, char** argv)
         {"--kernel-width", "Kernel gauss width", new FloatProcessor(config.kernelGaussWidth)},
         {"--growth-center", "Kernel growth center", new FloatProcessor(config.growthGaussCenter)},
         {"--growth-width", "Kernel growth width", new FloatProcessor(config.growthGaussWidth)},
+        {"--ring-weight-1", "First Ring weight", new FloatInListProcessor(config.ringWeights, 0)},
+        {"--ring-weight-2", "Second Ring weight", new FloatInListProcessor(config.ringWeights, 1)},
+        {"--ring-weight-3", "Third Ring weight", new FloatInListProcessor(config.ringWeights, 2)},
         // clang-format on
     };
 

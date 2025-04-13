@@ -270,11 +270,11 @@ Config parse_command_line(int argc, char** argv)
         {"--birth-max", "max value for birth", new FloatProcessor(config.birthRangeMax)},
         {"--kernel-center", "Kernel gauss center", new FloatProcessor(config.kernelGaussCenter)},
         {"--kernel-width", "Kernel gauss width", new FloatProcessor(config.kernelGaussWidth)},
-        {"--growth-center", "Kernel growth center", new FloatProcessor(config.growthGaussCenter)},
-        {"--growth-width", "Kernel growth width", new FloatProcessor(config.growthGaussWidth)},
-        {"--ring-weight-1", "First Ring weight", new FloatInListProcessor(config.ringWeights, 0)},
-        {"--ring-weight-2", "Second Ring weight", new FloatInListProcessor(config.ringWeights, 1)},
-        {"--ring-weight-3", "Third Ring weight", new FloatInListProcessor(config.ringWeights, 2)},
+        {"--growth-center", "Kernel growth center", new FloatProcessor(config.kernel.growthGaussCenter)},
+        {"--growth-width", "Kernel growth width", new FloatProcessor(config.kernel.growthGaussWidth)},
+        {"--ring-weight-1", "First Ring weight", new FloatInListProcessor(config.kernel.ringWeights, 0)},
+        {"--ring-weight-2", "Second Ring weight", new FloatInListProcessor(config.kernel.ringWeights, 1)},
+        {"--ring-weight-3", "Third Ring weight", new FloatInListProcessor(config.kernel.ringWeights, 2)},
         // clang-format on
     };
 

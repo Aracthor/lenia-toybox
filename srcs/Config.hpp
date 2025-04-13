@@ -39,9 +39,13 @@ struct Config
     // lenia
     float kernelGaussCenter = 0.5f;
     float kernelGaussWidth = 0.15f;
-    float growthGaussCenter = 0.135f;
-    float growthGaussWidth = 0.014f;
-    std::vector<float> ringWeights = {1.f};
+    struct Kernel
+    {
+        float growthGaussCenter = 0.135f;
+        float growthGaussWidth = 0.014f;
+        std::vector<float> ringWeights = {1.f};
+    };
+    Kernel kernel;
 };
 
 Config parse_command_line(int argc, char** argv);

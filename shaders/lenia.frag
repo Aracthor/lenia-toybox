@@ -5,16 +5,22 @@ precision mediump float;
 uniform vec2 uniResolution;
 uniform sampler2D input_texture;
 
+const int MAX_KERNELS_COUNT=3;
 const int MAX_RING_COUNT=3;
+
+struct Kernel
+{
+    float growthGaussCenter;
+    float growthGaussWidth;
+    int ringCount;
+    float ringWeights[MAX_RING_COUNT];
+};
 
 uniform int uniRange;
 uniform float uniDelaTime;
 uniform float uniKernelGaussCenter;
 uniform float uniKernelGaussWidth;
-uniform float uniGrowthGaussCenter;
-uniform float uniGrowthGaussWidth;
-uniform int uniRingCount;
-uniform float uniRingWeights[MAX_RING_COUNT];
+uniform Kernel uniKernel;
 
 out vec4 frag_color;
 
@@ -26,10 +32,10 @@ float bell(float x, float m, float s)
 
 float pixel_weight(float distance)
 {
-    float bDistance = distance * float(uniRingCount);
+    float bDistance = distance * float(uniKernel.ringCount);
     int ringIndex = int(bDistance);
     float ringDistance = mod(bDistance, 1.0);
-    float weight = uniRingWeights[ringIndex];
+    float weight = uniKernel.ringWeights[ringIndex];
 
     return weight * bell(ringDistance, uniKernelGaussCenter, uniKernelGaussWidth);
 }
@@ -56,12 +62,17 @@ float average_neighbours_value(vec2 uv)
     return sum / total_weight;
 }
 
+float growthFromKernel(vec2 uv)
+{
+    float neighbours = average_neighbours_value(uv);
+    return bell(neighbours, uniKernel.growthGaussCenter, uniKernel.growthGaussWidth) * 2.0 - 1.0;
+}
+
 void main()
 {
     vec2 uv = gl_FragCoord.xy / uniResolution;
     float color = texture(input_texture, uv).r;
-    float neighbours = average_neighbours_value(uv);
-    float growth = bell(neighbours, uniGrowthGaussCenter, uniGrowthGaussWidth) * 2.0 - 1.0;
+    float growth = growthFromKernel(uv);
     color = clamp(color + uniDelaTime * growth, 0.0, 1.0);
     frag_color = vec4(color, color, color, 1.0);
 }

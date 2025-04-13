@@ -94,14 +94,14 @@ void LifeProcessor::ConfigureComputeProgram() const
         m_computeShader.SetUniformFloat("uniDelaTime", 1.f / m_config.timestamp);
         m_computeShader.SetUniformFloat("uniKernelGaussCenter", m_config.kernelGaussCenter);
         m_computeShader.SetUniformFloat("uniKernelGaussWidth", m_config.kernelGaussWidth);
-        m_computeShader.SetUniformFloat("uniGrowthGaussCenter", m_config.growthGaussCenter);
-        m_computeShader.SetUniformFloat("uniGrowthGaussWidth", m_config.growthGaussWidth);
-        m_computeShader.SetUniformInt("uniRingCount", m_config.ringWeights.size());
-        for (int i = 0; i < (int)m_config.ringWeights.size(); i++)
+        m_computeShader.SetUniformFloat("uniKernel.growthGaussCenter", m_config.kernel.growthGaussCenter);
+        m_computeShader.SetUniformFloat("uniKernel.growthGaussWidth", m_config.kernel.growthGaussWidth);
+        m_computeShader.SetUniformInt("uniKernel.ringCount", m_config.kernel.ringWeights.size());
+        for (int i = 0; i < (int)m_config.kernel.ringWeights.size(); i++)
         {
             std::ostringstream uniformNameOss;
-            uniformNameOss << "uniRingWeights[" << i << "]";
-            m_computeShader.SetUniformFloat(uniformNameOss.str().c_str(), m_config.ringWeights[i]);
+            uniformNameOss << "uniKernel.ringWeights[" << i << "]";
+            m_computeShader.SetUniformFloat(uniformNameOss.str().c_str(), m_config.kernel.ringWeights[i]);
         }
         break;
     }

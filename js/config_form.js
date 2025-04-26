@@ -177,8 +177,13 @@ const onConfigFormLoad = async () => {
     }
     for (const param_name of param_names) {
         let value = parameters.get(param_name);
-        document.getElementById(param_name).value = value;
-        document.getElementById(param_name).checked = Boolean(value);
+        let input_element = document.getElementById(param_name);
+        console.log(input_element.type);
+        if (input_element.type == "checkbox") {
+            input_element.checked = value == "true";
+        } else {
+            input_element.value = value;
+        }
         if (param_name == "algorithm") {
             set_algorithm(value)
         }

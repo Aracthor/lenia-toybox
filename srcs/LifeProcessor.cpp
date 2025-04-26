@@ -116,13 +116,18 @@ void LifeProcessor::ConfigureComputeProgram() const
                                             m_config.kernels[k].growthGaussCenter);
             m_computeShader.SetUniformFloat(stringprintf("uniKernels[%d].growthGaussWidth", k).c_str(),
                                             m_config.kernels[k].growthGaussWidth);
-            m_computeShader.SetUniformInt(stringprintf("uniKernels[%d].ringCount", k).c_str(),
-                                          m_config.kernels[k].ringWeights.size());
+            int ringCount = 0;
             for (int r = 0; r < (int)m_config.kernels[k].ringWeights.size(); r++)
             {
-                m_computeShader.SetUniformFloat(stringprintf("uniKernels[%d].ringWeights[%d]", k, r).c_str(),
-                                                m_config.kernels[k].ringWeights[r]);
+                const std::optional<float> ringWeight = m_config.kernels[k].ringWeights[r];
+                if (ringWeight)
+                {
+                    m_computeShader.SetUniformFloat(
+                        stringprintf("uniKernels[%d].ringWeights[%d]", k, ringCount).c_str(), *ringWeight);
+                    ringCount++;
+                }
             }
+            m_computeShader.SetUniformInt(stringprintf("uniKernels[%d].ringCount", k).c_str(), ringCount);
         }
         break;
     }

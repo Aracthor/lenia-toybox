@@ -54,23 +54,11 @@ function input_kernel_ring_enabled(kernel_index, ring_index) {
     document.getElementById(weight_element_name).disabled = !enabled;
     if (!enabled)
     {
-        if (ring_index == 2)
-        {
-            let next_kernel_element_id = "kernel_" + kernel_index + "_ring_" + (ring_index + 1) + "_enabled";
-            document.getElementById(next_kernel_element_id).checked = false;
-            input_kernel_ring_enabled(kernel_index, ring_index + 1);
-        }
         let function_name = "_app_config_kernel_" + kernel_index + "_remove_ring";
         window.module[function_name](ring_index);
     }
     else
     {
-        if (ring_index == 3)
-        {
-            let next_kernel_element_id = "kernel_" + kernel_index + "_ring_" + (ring_index - 1) + "_enabled";
-            document.getElementById(next_kernel_element_id).checked = true;
-            input_kernel_ring_enabled(kernel_index, ring_index - 1);
-        }
         input_config(weight_element_name);
     }
 }

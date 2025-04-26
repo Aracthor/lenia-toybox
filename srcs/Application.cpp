@@ -114,7 +114,7 @@ extern "C"
     void EMSCRIPTEN_KEEPALIVE app_config_kernel_1_ring_1_weight(float weight) { g_config.kernels[0].SetWeight(0, weight); }
     void EMSCRIPTEN_KEEPALIVE app_config_kernel_1_ring_2_weight(float weight) { g_config.kernels[0].SetWeight(1, weight); }
     void EMSCRIPTEN_KEEPALIVE app_config_kernel_1_ring_3_weight(float weight) { g_config.kernels[0].SetWeight(2, weight); }
-    void EMSCRIPTEN_KEEPALIVE app_config_kernel_1_remove_ring(int index) { g_config.kernels[0].RemoveRing(index); }
+    void EMSCRIPTEN_KEEPALIVE app_config_kernel_1_remove_ring(int index) { g_config.kernels[0].RemoveRing(index - 1); }
 }
 #endif // __EMSCRIPTEN__
 // clang-format on

@@ -255,6 +255,8 @@ void Config::Kernel::SetWeight(size_t index, float weight)
 
 void Config::Kernel::RemoveRing(size_t index)
 {
+    if (ringWeights.size() <= index)
+        ringWeights.resize(index + 1);
     ringWeights[index] = {};
 }
 

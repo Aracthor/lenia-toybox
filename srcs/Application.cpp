@@ -111,10 +111,10 @@ extern "C"
     void EMSCRIPTEN_KEEPALIVE app_config_kernel_width(float width) { g_config.kernelGaussWidth = width; }
     void EMSCRIPTEN_KEEPALIVE app_config_kernel_1_growth_center(float center) { g_config.kernels[0].growthGaussCenter = center; }
     void EMSCRIPTEN_KEEPALIVE app_config_kernel_1_growth_width(float width) { g_config.kernels[0].growthGaussWidth = width; }
-    void EMSCRIPTEN_KEEPALIVE app_config_kernel_1_ring_1_weight(float weight) { g_config.kernels[0].SetWeight(0, weight); }
-    void EMSCRIPTEN_KEEPALIVE app_config_kernel_1_ring_2_weight(float weight) { g_config.kernels[0].SetWeight(1, weight); }
-    void EMSCRIPTEN_KEEPALIVE app_config_kernel_1_ring_3_weight(float weight) { g_config.kernels[0].SetWeight(2, weight); }
-    void EMSCRIPTEN_KEEPALIVE app_config_kernel_1_remove_ring(int index) { g_config.kernels[0].RemoveRing(index - 1); }
+    void EMSCRIPTEN_KEEPALIVE app_config_kernel_1_ring_1_weight(float weight) { g_config.kernels[0].ringWeights[0] = weight; }
+    void EMSCRIPTEN_KEEPALIVE app_config_kernel_1_ring_2_weight(float weight) { g_config.kernels[0].ringWeights[1] = weight; }
+    void EMSCRIPTEN_KEEPALIVE app_config_kernel_1_ring_3_weight(float weight) { g_config.kernels[0].ringWeights[2] = weight; }
+    void EMSCRIPTEN_KEEPALIVE app_config_kernel_1_remove_ring(int index) { g_config.kernels[0].ringWeights[index - 1] = {}; }
 }
 #endif // __EMSCRIPTEN__
 // clang-format on

@@ -44,9 +44,6 @@ struct Config
         float growthGaussCenter = 0.135f;
         float growthGaussWidth = 0.014f;
         std::optional<float> ringWeights[3] = {1.f};
-
-        void SetWeight(size_t index, float weight);
-        void RemoveRing(size_t index);
     };
     int kernelCount = 1;
     Kernel kernels[3];

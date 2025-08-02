@@ -152,7 +152,7 @@ public:
         argIterator++;
         if (!isDecimalNumber(nextArg))
             throw std::invalid_argument(std::string("Expected decimal number, but got: ") + nextArg);
-        m_kernel.SetWeight(m_index, std::atof(nextArg));
+        m_kernel.ringWeights[m_index] = std::atof(nextArg);
     }
 
 private:
@@ -245,16 +245,6 @@ Type FromName(const std::string& name)
     return it->second;
 }
 } // namespace Algorithm
-
-void Config::Kernel::SetWeight(size_t index, float weight)
-{
-    ringWeights[index] = weight;
-}
-
-void Config::Kernel::RemoveRing(size_t index)
-{
-    ringWeights[index] = {};
-}
 
 Config parse_command_line(int argc, char** argv)
 {

@@ -14,217 +14,221 @@
         <canvas id="canvas" width="800" height="600" tabindex=-1></canvas>
       </div>
 
-      <fieldset>
-        <legend>Configuration</legend>
-
-        <button onclick='restart();'>Restart</button>
-        <br />
-
+      <div id="config_panel">
         <fieldset>
-          <legend>Grid</legend>
-          <table>
-            <tbody>
-              <tr>
-                <td>Width</td>
-                <td>
-                  <input id="width"  type="text" oninput='input_config("width");' />
-                </td>
-              </tr>
-              <tr>
-                <td>Height</td>
-                <td>
-                  <input id="height" type="text" oninput='input_config("height");' />
-                </td>
-              </tr>
-              <tr>
-                <td>Framerate</td>
-                <td>
-                  <input id="framerate" type="text" oninput='input_config("framerate");' />
-                </td>
-              </tr>
-              <tr>
-                <td>Startup</td>
-                <td>
-                  <select id="startup" onchange='input_config("startup");'>
-                    <option value="" selected>(Random)</option>
-                    <option value="startups/orbium.bmp">Orbium</option>
-                    <option value="startups/hydrogeminium.bmp">Hydrogeminium</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>Pause start</td>
-                <td>
-                  <input id="pause" type="checkbox" onchange='input_config("pause");' />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </fieldset>
- 
-        <fieldset>
-          <legend>Algorithm</legend>
-          <label for="preset">Preset</label>
-          <select id="preset" onchange='set_preset();'>
-            <option value="conway-life">Conway's life</option>
-            <option value="bosco-rule">Bosco's rule</option>
-            <option value="primordia">Primordia</option>
-            <option value="primordia-proto-lenia">Primordia Proto-Lenia</option>
-            <option value="lenia" selected>Lenia</option>
-            <option value="hydrogeminium">Hydrogeminium</option>
-            <option value="(custom)" hidden>(Custom)</option>)
-          </select>
-          <hr />
-          <table>
-            <tbody>
-              <tr>
-                <td>Algorithm</td>
-                <td>
-                  <select id="algorithm" onchange='input_algorithm();'>
-                    <option value="larger-than-life">Larger than life</option>
-                    <option value="primordia">Primordia</option>
-                    <option value="lenia" selected>Lenia</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>Range</td>
-                <td>
-                  <input id="range" type="text" onchange='input_algorithm_config("range");' />
-                </td>
-              </tr>
-              <tr id="survival_range_field" hidden=true>
-                <td>Survival Range</td>
-                <td>
-                  <input id="survival_range_min" type="text" onchange='input_algorithm_config("survival_range_min");' />
-                  <input id="survival_range_max" type="text" onchange='input_algorithm_config("survival_range_max");' />
-                </td>
-              </tr>
-              <tr id="birth_range_field" hidden=true>
-                <td>Birth Range</td>
-                <td>
-                  <input id="birth_range_min" type="text" onchange='input_algorithm_config("birth_range_min");' />
-                  <input id="birth_range_max" type="text" onchange='input_algorithm_config("birth_range_max");' />
-                </td>
-              </tr>
-              <tr id="timestamp_field">
-                <td>Timestamp</td>
-                <td>
-                  <input id="timestamp" type="text" onchange='input_algorithm_config("timestamp");' />
-                </td>
-              </tr>
-              <tr id="kernel_gauss_field">
-                <td>Kernel Gauss</td>
-                <td>
-                  <input id="kernel_center" type="text" onchange='input_algorithm_config("kernel_center");' />
-                  <input id="kernel_width"  type="text" onchange='input_algorithm_config("kernel_width");' />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div id="kernels_config">
-            <span>Kernel 1</span>
-            <fieldset id="kernel_1">
+          <legend>Configuration</legend>
+
+          <button onclick='restart();'>Restart</button>
+          <br />
+
+          <div id="config_params">
+            <fieldset>
+              <legend>Grid</legend>
               <table>
-                <tr>
-                  <td>Growth Gauss</td>
-                  <td>
-                    <input id="kernel_1_growth_center" type="text" onchange='input_algorithm_config("kernel_1_growth_center");' />
-                    <input id="kernel_1_growth_width"  type="text" onchange='input_algorithm_config("kernel_1_growth_width");' />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ring 1 Weight</td>
-                  <td>
-                    <input id="kernel_1_ring_1_weight" type="text" onchange='input_algorithm_config("kernel_1_ring_1_weight");' />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ring 2 Weight</td>
-                  <td>
-                    <input id="kernel_1_ring_2_weight" type="text" onchange='input_algorithm_config("kernel_1_ring_2_weight");' disabled />
-                    <input id="kernel_1_ring_2_enabled" type="checkbox" onchange='input_kernel_ring_enabled(1, 2);' />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ring 3 Weight</td>
-                  <td>
-                    <input id="kernel_1_ring_3_weight" type="text" onchange='input_algorithm_config("kernel_1_ring_3_weight");' disabled />
-                    <input id="kernel_1_ring_3_enabled" type="checkbox" onchange='input_kernel_ring_enabled(1, 3);' />
-                  </td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td>Width</td>
+                    <td>
+                      <input id="width"  type="text" oninput='input_config("width");' />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Height</td>
+                    <td>
+                      <input id="height" type="text" oninput='input_config("height");' />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Framerate</td>
+                    <td>
+                      <input id="framerate" type="text" oninput='input_config("framerate");' />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Startup</td>
+                    <td>
+                      <select id="startup" onchange='input_config("startup");'>
+                        <option value="" selected>(Random)</option>
+                        <option value="startups/orbium.bmp">Orbium</option>
+                        <option value="startups/hydrogeminium.bmp">Hydrogeminium</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Pause start</td>
+                    <td>
+                      <input id="pause" type="checkbox" onchange='input_config("pause");' />
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </fieldset>
 
-            <span>Kernel 2</span>
-            <input id="kernel_2_enabled" type="checkbox" onchange='input_kernel_enabled(2);' />
-            <fieldset id="kernel_2" disabled>
+            <fieldset>
+              <legend>Algorithm</legend>
+              <label for="preset">Preset</label>
+              <select id="preset" onchange='set_preset();'>
+                <option value="conway-life">Conway's life</option>
+                <option value="bosco-rule">Bosco's rule</option>
+                <option value="primordia">Primordia</option>
+                <option value="primordia-proto-lenia">Primordia Proto-Lenia</option>
+                <option value="lenia" selected>Lenia</option>
+                <option value="hydrogeminium">Hydrogeminium</option>
+                <option value="(custom)" hidden>(Custom)</option>)
+              </select>
+              <hr />
               <table>
-                <tr>
-                  <td>Growth Gauss</td>
-                  <td>
-                    <input id="kernel_2_growth_center" type="text" onchange='input_algorithm_config("kernel_2_growth_center");' />
-                    <input id="kernel_2_growth_width"  type="text" onchange='input_algorithm_config("kernel_2_growth_width");' />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ring 1 Weight</td>
-                  <td>
-                    <input id="kernel_2_ring_1_weight" type="text" onchange='input_algorithm_config("kernel_2_ring_1_weight");' />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ring 2 Weight</td>
-                  <td>
-                    <input id="kernel_2_ring_2_weight" type="text" onchange='input_algorithm_config("kernel_2_ring_2_weight");' disabled />
-                    <input id="kernel_2_ring_2_enabled" type="checkbox" onchange='input_kernel_ring_enabled(2, 2);' />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ring 3 Weight</td>
-                  <td>
-                    <input id="kernel_2_ring_3_weight" type="text" onchange='input_algorithm_config("kernel_2_ring_3_weight");' disabled />
-                    <input id="kernel_2_ring_3_enabled" type="checkbox" onchange='input_kernel_ring_enabled(2, 3);' />
-                  </td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td>Algorithm</td>
+                    <td>
+                      <select id="algorithm" onchange='input_algorithm();'>
+                        <option value="larger-than-life">Larger than life</option>
+                        <option value="primordia">Primordia</option>
+                        <option value="lenia" selected>Lenia</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Range</td>
+                    <td>
+                      <input id="range" type="text" onchange='input_algorithm_config("range");' />
+                    </td>
+                  </tr>
+                  <tr id="survival_range_field" hidden=true>
+                    <td>Survival Range</td>
+                    <td>
+                      <input id="survival_range_min" type="text" onchange='input_algorithm_config("survival_range_min");' />
+                      <input id="survival_range_max" type="text" onchange='input_algorithm_config("survival_range_max");' />
+                    </td>
+                  </tr>
+                  <tr id="birth_range_field" hidden=true>
+                    <td>Birth Range</td>
+                    <td>
+                      <input id="birth_range_min" type="text" onchange='input_algorithm_config("birth_range_min");' />
+                      <input id="birth_range_max" type="text" onchange='input_algorithm_config("birth_range_max");' />
+                    </td>
+                  </tr>
+                  <tr id="timestamp_field">
+                    <td>Timestamp</td>
+                    <td>
+                      <input id="timestamp" type="text" onchange='input_algorithm_config("timestamp");' />
+                    </td>
+                  </tr>
+                  <tr id="kernel_gauss_field">
+                    <td>Kernel Gauss</td>
+                    <td>
+                      <input id="kernel_center" type="text" onchange='input_algorithm_config("kernel_center");' />
+                      <input id="kernel_width"  type="text" onchange='input_algorithm_config("kernel_width");' />
+                    </td>
+                  </tr>
+                </tbody>
               </table>
-            </fieldset>
+              <div id="kernels_config">
+                <span>Kernel 1</span>
+                <fieldset id="kernel_1">
+                  <table>
+                    <tr>
+                      <td>Growth Gauss</td>
+                      <td>
+                        <input id="kernel_1_growth_center" type="text" onchange='input_algorithm_config("kernel_1_growth_center");' />
+                        <input id="kernel_1_growth_width"  type="text" onchange='input_algorithm_config("kernel_1_growth_width");' />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Ring 1 Weight</td>
+                      <td>
+                        <input id="kernel_1_ring_1_weight" type="text" onchange='input_algorithm_config("kernel_1_ring_1_weight");' />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Ring 2 Weight</td>
+                      <td>
+                        <input id="kernel_1_ring_2_weight" type="text" onchange='input_algorithm_config("kernel_1_ring_2_weight");' disabled />
+                        <input id="kernel_1_ring_2_enabled" type="checkbox" onchange='input_kernel_ring_enabled(1, 2);' />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Ring 3 Weight</td>
+                      <td>
+                        <input id="kernel_1_ring_3_weight" type="text" onchange='input_algorithm_config("kernel_1_ring_3_weight");' disabled />
+                        <input id="kernel_1_ring_3_enabled" type="checkbox" onchange='input_kernel_ring_enabled(1, 3);' />
+                      </td>
+                    </tr>
+                  </table>
+                </fieldset>
 
-            <span>Kernel 3</span>
-            <input id="kernel_3_enabled" type="checkbox" onchange='input_kernel_enabled(3);' />
-            <fieldset id="kernel_3" disabled>
-              <table>
-                <tr>
-                  <td>Growth Gauss</td>
-                  <td>
-                    <input id="kernel_3_growth_center" type="text" onchange='input_algorithm_config("kernel_3_growth_center");' />
-                    <input id="kernel_3_growth_width"  type="text" onchange='input_algorithm_config("kernel_3_growth_width");' />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ring 1 Weight</td>
-                  <td>
-                    <input id="kernel_3_ring_1_weight" type="text" onchange='input_algorithm_config("kernel_3_ring_1_weight");' />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ring 2 Weight</td>
-                  <td>
-                    <input id="kernel_3_ring_2_weight" type="text" onchange='input_algorithm_config("kernel_3_ring_2_weight");' disabled />
-                    <input id="kernel_3_ring_2_enabled" type="checkbox" onchange='input_kernel_ring_enabled(3, 2);' />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ring 3 Weight</td>
-                  <td>
-                    <input id="kernel_3_ring_3_weight" type="text" onchange='input_algorithm_config("kernel_3_ring_3_weight");' disabled />
-                    <input id="kernel_3_ring_3_enabled" type="checkbox" onchange='input_kernel_ring_enabled(3, 3);' />
-                  </td>
-                </tr>
-              </table>
+                <span>Kernel 2</span>
+                <input id="kernel_2_enabled" type="checkbox" onchange='input_kernel_enabled(2);' />
+                <fieldset id="kernel_2" disabled>
+                  <table>
+                    <tr>
+                      <td>Growth Gauss</td>
+                      <td>
+                        <input id="kernel_2_growth_center" type="text" onchange='input_algorithm_config("kernel_2_growth_center");' />
+                        <input id="kernel_2_growth_width"  type="text" onchange='input_algorithm_config("kernel_2_growth_width");' />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Ring 1 Weight</td>
+                      <td>
+                        <input id="kernel_2_ring_1_weight" type="text" onchange='input_algorithm_config("kernel_2_ring_1_weight");' />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Ring 2 Weight</td>
+                      <td>
+                        <input id="kernel_2_ring_2_weight" type="text" onchange='input_algorithm_config("kernel_2_ring_2_weight");' disabled />
+                        <input id="kernel_2_ring_2_enabled" type="checkbox" onchange='input_kernel_ring_enabled(2, 2);' />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Ring 3 Weight</td>
+                      <td>
+                        <input id="kernel_2_ring_3_weight" type="text" onchange='input_algorithm_config("kernel_2_ring_3_weight");' disabled />
+                        <input id="kernel_2_ring_3_enabled" type="checkbox" onchange='input_kernel_ring_enabled(2, 3);' />
+                      </td>
+                    </tr>
+                  </table>
+                </fieldset>
+
+                <span>Kernel 3</span>
+                <input id="kernel_3_enabled" type="checkbox" onchange='input_kernel_enabled(3);' />
+                <fieldset id="kernel_3" disabled>
+                  <table>
+                    <tr>
+                      <td>Growth Gauss</td>
+                      <td>
+                        <input id="kernel_3_growth_center" type="text" onchange='input_algorithm_config("kernel_3_growth_center");' />
+                        <input id="kernel_3_growth_width"  type="text" onchange='input_algorithm_config("kernel_3_growth_width");' />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Ring 1 Weight</td>
+                      <td>
+                        <input id="kernel_3_ring_1_weight" type="text" onchange='input_algorithm_config("kernel_3_ring_1_weight");' />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Ring 2 Weight</td>
+                      <td>
+                        <input id="kernel_3_ring_2_weight" type="text" onchange='input_algorithm_config("kernel_3_ring_2_weight");' disabled />
+                        <input id="kernel_3_ring_2_enabled" type="checkbox" onchange='input_kernel_ring_enabled(3, 2);' />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Ring 3 Weight</td>
+                      <td>
+                        <input id="kernel_3_ring_3_weight" type="text" onchange='input_algorithm_config("kernel_3_ring_3_weight");' disabled />
+                        <input id="kernel_3_ring_3_enabled" type="checkbox" onchange='input_kernel_ring_enabled(3, 3);' />
+                      </td>
+                    </tr>
+                  </table>
+                </fieldset>
+              </div>
             </fieldset>
           </div>
-        </fieldset>
+        </div>
       </div>
 
     <textarea id="loggerOutput" rows="10" readonly></textarea>

@@ -8,6 +8,15 @@ fieldset:disabled {
   background-color: black;
 }
 
+#config_panel {
+  height: 600px;
+}
+
+#config_params {
+  height: 540px;
+  overflow-y: scroll;
+}
+
 #errorText {
   font-size: 30px;
   color: white;

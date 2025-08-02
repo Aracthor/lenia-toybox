@@ -158,6 +158,15 @@ function set_preset() {
         },
     };
 
+    const params_to_checkbox = {
+        "kernel_1_ring_2_weight": "kernel_1_ring_2_enabled",
+        "kernel_1_ring_3_weight": "kernel_1_ring_3_enabled",
+    };
+
+    for (const [param, checkbox] of Object.entries(params_to_checkbox)) {
+        document.getElementById(param).disabled = true;
+        document.getElementById(checkbox).checked = false;
+    }
     let preset_name = document.getElementById("preset").value;
     let preset = preset_params[preset_name];
     document.getElementById("algorithm").value = preset.algorithm;
@@ -166,6 +175,11 @@ function set_preset() {
         let value = preset.params[param];
         document.getElementById(param).value = value;
         set_config(param);
+        let checkbox = params_to_checkbox[param];
+        if (checkbox) {
+            document.getElementById(param).disabled = false;
+            document.getElementById(checkbox).checked = true;
+        }
     }
 }
 window.set_preset = set_preset;

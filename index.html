@@ -25,33 +25,25 @@
           <table>
             <tbody>
               <tr>
-                <td>
-                  Width
-                </td>
+                <td>Width</td>
                 <td>
                   <input id="width"  type="text" oninput='input_config("width");' />
                 </td>
               </tr>
               <tr>
-                <td>
-                  Height
-                </td>
+                <td>Height</td>
                 <td>
                   <input id="height" type="text" oninput='input_config("height");' />
                 </td>
               </tr>
               <tr>
-                <td>
-                  Framerate
-                </td>
+                <td>Framerate</td>
                 <td>
                   <input id="framerate" type="text" oninput='input_config("framerate");' />
                 </td>
               </tr>
               <tr>
-                <td>
-                  Startup
-                </td>
+                <td>Startup</td>
                 <td>
                   <select id="startup" onchange='input_config("startup");'>
                     <option value="" selected>(Random)</option>
@@ -61,9 +53,7 @@
                 </td>
               </tr>
               <tr>
-                <td>
-                  Pause start
-                </td>
+                <td>Pause start</td>
                 <td>
                   <input id="pause" type="checkbox" onchange='input_config("pause");' />
                 </td>
@@ -88,9 +78,7 @@
           <table>
             <tbody>
               <tr>
-                <td>
-                  Algorithm
-                </td>
+                <td>Algorithm</td>
                 <td>
                   <select id="algorithm" onchange='input_algorithm();'>
                     <option value="larger-than-life">Larger than life</option>
@@ -100,43 +88,33 @@
                 </td>
               </tr>
               <tr>
-                <td>
-                  Range
-                </td>
+                <td>Range</td>
                 <td>
                   <input id="range" type="text" onchange='input_algorithm_config("range");' />
                 </td>
               </tr>
               <tr id="survival_range_field" hidden=true>
-                <td>
-                  Survival Range
-                </td>
+                <td>Survival Range</td>
                 <td>
                   <input id="survival_range_min" type="text" onchange='input_algorithm_config("survival_range_min");' />
                   <input id="survival_range_max" type="text" onchange='input_algorithm_config("survival_range_max");' />
                 </td>
               </tr>
               <tr id="birth_range_field" hidden=true>
-                <td>
-                  Birth Range
-                </td>
+                <td>Birth Range</td>
                 <td>
                   <input id="birth_range_min" type="text" onchange='input_algorithm_config("birth_range_min");' />
                   <input id="birth_range_max" type="text" onchange='input_algorithm_config("birth_range_max");' />
                 </td>
               </tr>
               <tr id="timestamp_field">
-                <td>
-                  Timestamp
-                </td>
+                <td>Timestamp</td>
                 <td>
                   <input id="timestamp" type="text" onchange='input_algorithm_config("timestamp");' />
                 </td>
               </tr>
               <tr id="kernel_gauss_field">
-                <td>
-                  Kernel Gauss
-                </td>
+                <td>Kernel Gauss</td>
                 <td>
                   <input id="kernel_center" type="text" onchange='input_algorithm_config("kernel_center");' />
                   <input id="kernel_width"  type="text" onchange='input_algorithm_config("kernel_width");' />
@@ -149,35 +127,27 @@
               <legend>Kernel 1</legend>
               <table>
                 <tr>
-                  <td>
-                    Growth Gauss
-                  </td>
+                  <td>Growth Gauss</td>
                   <td>
                     <input id="kernel_1_growth_center" type="text" onchange='input_algorithm_config("kernel_1_growth_center");' />
                     <input id="kernel_1_growth_width"  type="text" onchange='input_algorithm_config("kernel_1_growth_width");' />
                   </td>
                 </tr>
                 <tr>
-                  <td>
-                    Ring 1 Weight
-                  </td>
+                  <td>Ring 1 Weight</td>
                   <td>
                     <input id="kernel_1_ring_1_weight" type="text" onchange='input_algorithm_config("kernel_1_ring_1_weight");' />
                   </td>
                 </tr>
                 <tr>
-                  <td>
-                    Ring 2 Weight
-                  </td>
+                  <td>Ring 2 Weight</td>
                   <td>
                     <input id="kernel_1_ring_2_weight" type="text" onchange='input_algorithm_config("kernel_1_ring_2_weight");' disabled />
                     <input id="kernel_1_ring_2_enabled" type="checkbox" onchange='input_kernel_ring_enabled(1, 2);' />
                   </td>
                 </tr>
                 <tr>
-                  <td>
-                    Ring 3 Weight
-                  </td>
+                  <td>Ring 3 Weight</td>
                   <td>
                     <input id="kernel_1_ring_3_weight" type="text" onchange='input_algorithm_config("kernel_1_ring_3_weight");' disabled />
                     <input id="kernel_1_ring_3_enabled" type="checkbox" onchange='input_kernel_ring_enabled(1, 3);' />

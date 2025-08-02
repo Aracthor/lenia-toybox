@@ -137,10 +137,34 @@ private:
     float& m_data;
 };
 
+template <float Config::Kernel::*member>
+class KernelFloatProcessor : public IParameterProcessor
+{
+public:
+    KernelFloatProcessor(std::optional<Config::Kernel>& kernel)
+        : m_kernel(kernel)
+    {
+    }
+
+    void Process(ArgIterator& argIterator) override
+    {
+        const char* nextArg = *argIterator;
+        argIterator++;
+        if (!isDecimalNumber(nextArg))
+            throw std::invalid_argument(std::string("Expected decimal number, but got: ") + nextArg);
+        if (!m_kernel)
+            m_kernel = Config::Kernel();
+        (*m_kernel).*member = std::atof(nextArg);
+    }
+
+private:
+    std::optional<Config::Kernel>& m_kernel;
+};
+
 class KernelRingProcessor : public IParameterProcessor
 {
 public:
-    KernelRingProcessor(Config::Kernel& kernel, size_t index)
+    KernelRingProcessor(std::optional<Config::Kernel>& kernel, size_t index)
         : m_kernel(kernel)
         , m_index(index)
     {
@@ -152,11 +176,13 @@ public:
         argIterator++;
         if (!isDecimalNumber(nextArg))
             throw std::invalid_argument(std::string("Expected decimal number, but got: ") + nextArg);
-        m_kernel.ringWeights[m_index] = std::atof(nextArg);
+        if (!m_kernel)
+            m_kernel = Config::Kernel();
+        m_kernel->ringWeights[m_index] = std::atof(nextArg);
     }
 
 private:
-    Config::Kernel& m_kernel;
+    std::optional<Config::Kernel>& m_kernel;
     const size_t m_index;
 };
 
@@ -267,14 +293,19 @@ Config parse_command_line(int argc, char** argv)
         {"--birth-max", "max value for birth", new FloatProcessor(config.birthRangeMax)},
         {"--kernel-center", "Kernel gauss center", new FloatProcessor(config.kernelGaussCenter)},
         {"--kernel-width", "Kernel gauss width", new FloatProcessor(config.kernelGaussWidth)},
-        {"--kernel-count", "Kernel count", new IntegerProcessor(config.kernelCount)},
-        {"--growth-center-1", "Kernel growth center", new FloatProcessor(config.kernels[0].growthGaussCenter)},
-        {"--growth-center-2", "Kernel growth center", new FloatProcessor(config.kernels[1].growthGaussCenter)},
-        {"--growth-center-3", "Kernel growth center", new FloatProcessor(config.kernels[2].growthGaussCenter)},
-        {"--growth-width-1", "Kernel growth width", new FloatProcessor(config.kernels[0].growthGaussWidth)},
-        {"--growth-width-2", "Kernel growth width", new FloatProcessor(config.kernels[1].growthGaussWidth)},
-        {"--growth-width-3", "Kernel growth width", new FloatProcessor(config.kernels[2].growthGaussWidth)},
-        {"--ring-weight-1-1", "First Ring weight", new KernelRingProcessor(config.kernels[0], 0)},
+        {"--growth-center-1", "Kernel growth center",
+         new KernelFloatProcessor<&Config::Kernel::growthGaussCenter>(config.kernels[0])},
+        {"--growth-center-2", "Kernel growth center",
+         new KernelFloatProcessor<&Config::Kernel::growthGaussCenter>(config.kernels[1])},
+        {"--growth-center-3", "Kernel growth center",
+         new KernelFloatProcessor<&Config::Kernel::growthGaussCenter>(config.kernels[2])},
+        {"--growth-width-1", "Kernel growth width",
+         new KernelFloatProcessor<&Config::Kernel::growthGaussWidth>(config.kernels[0])},
+        {"--growth-width-2", "Kernel growth width",
+         new KernelFloatProcessor<&Config::Kernel::growthGaussWidth>(config.kernels[1])},
+        {"--growth-width-3", "Kernel growth width",
+         new KernelFloatProcessor<&Config::Kernel::growthGaussWidth>(config.kernels[2])},
+        {"--ring-weight-1-1", "Second Ring weight", new KernelRingProcessor(config.kernels[0], 0)},
         {"--ring-weight-1-2", "Second Ring weight", new KernelRingProcessor(config.kernels[0], 1)},
         {"--ring-weight-1-3", "Third Ring weight", new KernelRingProcessor(config.kernels[0], 2)},
         {"--ring-weight-2-1", "First Ring weight", new KernelRingProcessor(config.kernels[1], 0)},

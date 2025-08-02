@@ -7,7 +7,6 @@
 -a lenia                        \
 -r 10                           \
 -t 10                           \
---kernel-count 3                \
                                 \
 --growth-center-1 0.156         \
 --growth-width-1 0.0118         \

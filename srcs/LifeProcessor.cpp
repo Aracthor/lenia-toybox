@@ -109,26 +109,33 @@ void LifeProcessor::ConfigureComputeProgram() const
         m_computeShader.SetUniformFloat("uniDelaTime", 1.f / m_config.timestamp);
         m_computeShader.SetUniformFloat("uniKernelGaussCenter", m_config.kernelGaussCenter);
         m_computeShader.SetUniformFloat("uniKernelGaussWidth", m_config.kernelGaussWidth);
-        m_computeShader.SetUniformInt("uniKernelCount", m_config.kernelCount);
-        for (int k = 0; k < m_config.kernelCount; k++)
+        int kernelCount = 0;
+        for (int k = 0; k < (int)std::size(m_config.kernels); k++)
         {
-            m_computeShader.SetUniformFloat(stringprintf("uniKernels[%d].growthGaussCenter", k).c_str(),
-                                            m_config.kernels[k].growthGaussCenter);
-            m_computeShader.SetUniformFloat(stringprintf("uniKernels[%d].growthGaussWidth", k).c_str(),
-                                            m_config.kernels[k].growthGaussWidth);
-            int ringCount = 0;
-            for (int r = 0; r < (int)std::size(m_config.kernels[k].ringWeights); r++)
+            const std::optional<Config::Kernel> kernel = m_config.kernels[k];
+            if (kernel)
             {
-                const std::optional<float> ringWeight = m_config.kernels[k].ringWeights[r];
-                if (ringWeight)
+                m_computeShader.SetUniformFloat(stringprintf("uniKernels[%d].growthGaussCenter", kernelCount).c_str(),
+                                                kernel->growthGaussCenter);
+                m_computeShader.SetUniformFloat(stringprintf("uniKernels[%d].growthGaussWidth", kernelCount).c_str(),
+                                                kernel->growthGaussWidth);
+                int ringCount = 0;
+                for (int r = 0; r < (int)std::size(kernel->ringWeights); r++)
                 {
-                    m_computeShader.SetUniformFloat(
-                        stringprintf("uniKernels[%d].ringWeights[%d]", k, ringCount).c_str(), *ringWeight);
-                    ringCount++;
+                    const std::optional<float> ringWeight = kernel->ringWeights[r];
+                    if (ringWeight)
+                    {
+                        m_computeShader.SetUniformFloat(
+                            stringprintf("uniKernels[%d].ringWeights[%d]", kernelCount, ringCount).c_str(),
+                            *ringWeight);
+                        ringCount++;
+                    }
                 }
+                m_computeShader.SetUniformInt(stringprintf("uniKernels[%d].ringCount", kernelCount).c_str(), ringCount);
+                kernelCount++;
             }
-            m_computeShader.SetUniformInt(stringprintf("uniKernels[%d].ringCount", k).c_str(), ringCount);
         }
+        m_computeShader.SetUniformInt("uniKernelCount", kernelCount);
         break;
     }
 }

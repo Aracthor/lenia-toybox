@@ -192,7 +192,6 @@ const onConfigFormLoad = async () => {
     for (const param_name of param_names) {
         let value = parameters.get(param_name);
         let input_element = document.getElementById(param_name);
-        console.log(input_element.type);
         if (input_element.type == "checkbox") {
             input_element.checked = value == "true";
         } else {

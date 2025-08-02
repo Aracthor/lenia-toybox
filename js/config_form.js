@@ -221,13 +221,13 @@ function set_preset() {
         "kernel_3_growth_width":  3,
     }
 
-    const params_to_checkbox = {
-        "kernel_1_ring_2_weight": "kernel_1_ring_2_enabled",
-        "kernel_1_ring_3_weight": "kernel_1_ring_3_enabled",
-        "kernel_2_ring_2_weight": "kernel_2_ring_2_enabled",
-        "kernel_2_ring_3_weight": "kernel_2_ring_3_enabled",
-        "kernel_3_ring_2_weight": "kernel_3_ring_2_enabled",
-        "kernel_3_ring_3_weight": "kernel_3_ring_3_enabled",
+    const params_to_kernel_ring = {
+        "kernel_1_ring_2_weight": [1, 2],
+        "kernel_1_ring_3_weight": [1, 3],
+        "kernel_2_ring_2_weight": [2, 2],
+        "kernel_2_ring_3_weight": [2, 3],
+        "kernel_3_ring_2_weight": [3, 2],
+        "kernel_3_ring_3_weight": [3, 3],
     };
 
     for (const [param, kernel] of Object.entries(params_to_kernel)) {
@@ -238,9 +238,14 @@ function set_preset() {
         let function_name = "_app_config_remove_kernel";
         window.module[function_name](kernel);
     }
-    for (const [param, checkbox] of Object.entries(params_to_checkbox)) {
+    for (const [param, kernel_and_ring] of Object.entries(params_to_kernel_ring)) {
+        const kernel = kernel_and_ring[0];
+        const ring = kernel_and_ring[1];
+        const checkbox = "kernel_" + kernel + "_ring_" + ring + "_weight";
         document.getElementById(param).disabled = true;
         document.getElementById(checkbox).checked = false;
+        const function_name = "_app_config_kernel_" + kernel + "_remove_ring";
+        window.module[function_name](ring);
     }
     let preset_name = document.getElementById("preset").value;
     let preset = preset_params[preset_name];
@@ -262,8 +267,11 @@ function set_preset() {
         let value = preset.params[param];
         document.getElementById(param).value = value;
         set_config(param);
-        let checkbox = params_to_checkbox[param];
-        if (checkbox) {
+        let kernel_and_ring = params_to_kernel_ring[param];
+        if (kernel_and_ring) {
+            const kernel = kernel_and_ring[0];
+            const ring = kernel_and_ring[1];
+            const checkbox = "kernel_" + kernel + "_ring_" + ring + "_weight";
             document.getElementById(param).disabled = false;
             document.getElementById(checkbox).checked = true;
         }

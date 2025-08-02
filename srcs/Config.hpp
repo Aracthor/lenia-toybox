@@ -2,7 +2,6 @@
 
 #include <optional>
 #include <string>
-#include <vector>
 
 namespace Algorithm
 {
@@ -44,7 +43,7 @@ struct Config
     {
         float growthGaussCenter = 0.135f;
         float growthGaussWidth = 0.014f;
-        std::vector<std::optional<float>> ringWeights = {1.f};
+        std::optional<float> ringWeights[3] = {1.f};
 
         void SetWeight(size_t index, float weight);
         void RemoveRing(size_t index);

@@ -117,7 +117,7 @@ void LifeProcessor::ConfigureComputeProgram() const
             m_computeShader.SetUniformFloat(stringprintf("uniKernels[%d].growthGaussWidth", k).c_str(),
                                             m_config.kernels[k].growthGaussWidth);
             int ringCount = 0;
-            for (int r = 0; r < (int)m_config.kernels[k].ringWeights.size(); r++)
+            for (int r = 0; r < (int)std::size(m_config.kernels[k].ringWeights); r++)
             {
                 const std::optional<float> ringWeight = m_config.kernels[k].ringWeights[r];
                 if (ringWeight)

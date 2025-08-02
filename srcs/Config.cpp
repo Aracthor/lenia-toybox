@@ -248,15 +248,11 @@ Type FromName(const std::string& name)
 
 void Config::Kernel::SetWeight(size_t index, float weight)
 {
-    if (ringWeights.size() <= index)
-        ringWeights.resize(index + 1);
     ringWeights[index] = weight;
 }
 
 void Config::Kernel::RemoveRing(size_t index)
 {
-    if (ringWeights.size() <= index)
-        ringWeights.resize(index + 1);
     ringWeights[index] = {};
 }
 

@@ -123,8 +123,8 @@
             </tbody>
           </table>
           <div id="kernels_config">
-            <fieldset>
-              <legend>Kernel 1</legend>
+            <span>Kernel 1</span>
+            <fieldset id="kernel_1">
               <table>
                 <tr>
                   <td>Growth Gauss</td>
@@ -151,6 +151,74 @@
                   <td>
                     <input id="kernel_1_ring_3_weight" type="text" onchange='input_algorithm_config("kernel_1_ring_3_weight");' disabled />
                     <input id="kernel_1_ring_3_enabled" type="checkbox" onchange='input_kernel_ring_enabled(1, 3);' />
+                  </td>
+                </tr>
+              </table>
+            </fieldset>
+
+            <span>Kernel 2</span>
+            <input id="kernel_2_enabled" type="checkbox" onchange='input_kernel_enabled(2);' />
+            <fieldset id="kernel_2" disabled>
+              <table>
+                <tr>
+                  <td>Growth Gauss</td>
+                  <td>
+                    <input id="kernel_2_growth_center" type="text" onchange='input_algorithm_config("kernel_2_growth_center");' />
+                    <input id="kernel_2_growth_width"  type="text" onchange='input_algorithm_config("kernel_2_growth_width");' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Ring 1 Weight</td>
+                  <td>
+                    <input id="kernel_2_ring_1_weight" type="text" onchange='input_algorithm_config("kernel_2_ring_1_weight");' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Ring 2 Weight</td>
+                  <td>
+                    <input id="kernel_2_ring_2_weight" type="text" onchange='input_algorithm_config("kernel_2_ring_2_weight");' disabled />
+                    <input id="kernel_2_ring_2_enabled" type="checkbox" onchange='input_kernel_ring_enabled(2, 2);' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Ring 3 Weight</td>
+                  <td>
+                    <input id="kernel_2_ring_3_weight" type="text" onchange='input_algorithm_config("kernel_2_ring_3_weight");' disabled />
+                    <input id="kernel_2_ring_3_enabled" type="checkbox" onchange='input_kernel_ring_enabled(2, 3);' />
+                  </td>
+                </tr>
+              </table>
+            </fieldset>
+
+            <span>Kernel 3</span>
+            <input id="kernel_3_enabled" type="checkbox" onchange='input_kernel_enabled(3);' />
+            <fieldset id="kernel_3" disabled>
+              <table>
+                <tr>
+                  <td>Growth Gauss</td>
+                  <td>
+                    <input id="kernel_3_growth_center" type="text" onchange='input_algorithm_config("kernel_3_growth_center");' />
+                    <input id="kernel_3_growth_width"  type="text" onchange='input_algorithm_config("kernel_3_growth_width");' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Ring 1 Weight</td>
+                  <td>
+                    <input id="kernel_3_ring_1_weight" type="text" onchange='input_algorithm_config("kernel_3_ring_1_weight");' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Ring 2 Weight</td>
+                  <td>
+                    <input id="kernel_3_ring_2_weight" type="text" onchange='input_algorithm_config("kernel_3_ring_2_weight");' disabled />
+                    <input id="kernel_3_ring_2_enabled" type="checkbox" onchange='input_kernel_ring_enabled(3, 2);' />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Ring 3 Weight</td>
+                  <td>
+                    <input id="kernel_3_ring_3_weight" type="text" onchange='input_algorithm_config("kernel_3_ring_3_weight");' disabled />
+                    <input id="kernel_3_ring_3_enabled" type="checkbox" onchange='input_kernel_ring_enabled(3, 3);' />
                   </td>
                 </tr>
               </table>

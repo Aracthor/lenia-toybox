@@ -64,6 +64,41 @@ function input_kernel_ring_enabled(kernel_index, ring_index) {
 }
 window.input_kernel_ring_enabled = input_kernel_ring_enabled;
 
+function input_kernel_enabled(kernel_index) {
+    let enabled_element_name = "kernel_" + kernel_index + "_enabled";
+    let kernel_element_name = "kernel_" + kernel_index;
+    let enabled = document.getElementById(enabled_element_name).checked;
+    document.getElementById(kernel_element_name).disabled = !enabled;
+    if (!enabled)
+    {
+        let function_name = "_app_config_remove_kernel";
+        window.module[function_name](kernel_index);
+    }
+    else
+    {
+        let function_name = "_app_config_add_kernel";
+        window.module[function_name](kernel_index);
+        let kernel_field_names = [
+            "kernel_" + kernel_index + "_growth_center",
+            "kernel_" + kernel_index + "_growth_width",
+            "kernel_" + kernel_index + "_ring_1_weight",
+            "kernel_" + kernel_index + "_ring_2_weight",
+            "kernel_" + kernel_index + "_ring_3_weight",
+        ];
+        let field_to_checkbox = {};
+        field_to_checkbox["kernel_" + kernel_index + "_ring_2_weight"] = "kernel_" + kernel_index + "_ring_2_enabled";
+        field_to_checkbox["kernel_" + kernel_index + "_ring_3_weight"] = "kernel_" + kernel_index + "_ring_3_enabled";
+
+        for (let field_name of kernel_field_names) {
+            let checkbox = field_to_checkbox[field_name]
+            if (!checkbox || document.getElementById(checkbox).checked) {
+                input_algorithm_config(field_name);
+            }
+        }
+    }
+}
+window.input_kernel_enabled = input_kernel_enabled;
+
 function set_algorithm() {
     const algorithms_params = {
         "larger-than-life": ["survival_range_field", "birth_range_field"],

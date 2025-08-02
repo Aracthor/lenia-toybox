@@ -191,13 +191,53 @@ function set_preset() {
                 "kernel_1_ring_3_weight": 0.667,
             },
         },
+        "fish": {
+            algorithm: "lenia",
+            params: {
+                "range": 10,
+                "timestamp": 10,
+                "kernel_center": 0.5,
+                "kernel_width": 0.15,
+                "kernel_1_growth_center": 0.156,
+                "kernel_1_growth_width": 0.0118,
+                "kernel_1_ring_1_weight": 1.0,
+                "kernel_1_ring_2_weight": 0.416,
+                "kernel_1_ring_3_weight": 0.667,
+                "kernel_2_growth_center": 0.193,
+                "kernel_2_growth_width": 0.049,
+                "kernel_2_ring_1_weight": 0.083,
+                "kernel_2_ring_2_weight": 1.0,
+                "kernel_3_growth_center": 0.342,
+                "kernel_3_growth_width": 0.089,
+                "kernel_3_ring_1_weight": 1.0,
+            },
+        },
     };
+
+    const params_to_kernel = {
+        "kernel_2_growth_center": 2,
+        "kernel_2_growth_width":  2,
+        "kernel_3_growth_center": 3,
+        "kernel_3_growth_width":  3,
+    }
 
     const params_to_checkbox = {
         "kernel_1_ring_2_weight": "kernel_1_ring_2_enabled",
         "kernel_1_ring_3_weight": "kernel_1_ring_3_enabled",
+        "kernel_2_ring_2_weight": "kernel_2_ring_2_enabled",
+        "kernel_2_ring_3_weight": "kernel_2_ring_3_enabled",
+        "kernel_3_ring_2_weight": "kernel_3_ring_2_enabled",
+        "kernel_3_ring_3_weight": "kernel_3_ring_3_enabled",
     };
 
+    for (const [param, kernel] of Object.entries(params_to_kernel)) {
+        const fieldset = "kernel_" + kernel;
+        const checkbox = fieldset + "_enabled";
+        document.getElementById(fieldset).disabled = true;
+        document.getElementById(checkbox).checked = false;
+        let function_name = "_app_config_remove_kernel";
+        window.module[function_name](kernel);
+    }
     for (const [param, checkbox] of Object.entries(params_to_checkbox)) {
         document.getElementById(param).disabled = true;
         document.getElementById(checkbox).checked = false;
@@ -206,6 +246,18 @@ function set_preset() {
     let preset = preset_params[preset_name];
     document.getElementById("algorithm").value = preset.algorithm;
     set_algorithm(preset.algorithm);
+    for (const param in preset.params) {
+        let kernel = params_to_kernel[param];
+        if (kernel) {
+            let fieldset = "kernel_" + kernel;
+            let checkbox = fieldset + "_enabled";
+            document.getElementById(fieldset).disabled = false;
+            document.getElementById(checkbox).checked = true;
+            let function_name = "_app_config_add_kernel";
+            window.module[function_name](kernel);
+        }
+    }
+
     for (const param in preset.params) {
         let value = preset.params[param];
         document.getElementById(param).value = value;
